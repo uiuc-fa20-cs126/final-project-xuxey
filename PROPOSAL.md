@@ -2,7 +2,7 @@
 
 ### What is this project?
 
-I will be recreating the popular arcade & retro game `Breakout` using Cinder and C++. The game involves eliminiating a set of randomly spawned blocks by strategically bouncing a ball on a player-controlled movable plate. If the ball is not caught by the plate, the game ends/restarts. 
+I will be recreating the popular arcade & retro game `Breakout` using Cinder and C++. The game involves eliminiating a set of randomly spawned blocks by strategically bouncing a ball on a player-controlled movable plate. If the ball is not caught by the plate, the game ends/restarts. Try playing it on this [webpage](https://elgoog.im/breakout/)!
 
 ![Breakout Game](https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/Breakout2600.svg/480px-Breakout2600.svg.png)
 
