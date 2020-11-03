@@ -6,20 +6,35 @@ I will be recreating the popular arcade & retro game `Breakout` using Cinder and
 
 ![Breakout Game](https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/Breakout2600.svg/480px-Breakout2600.svg.png)
 
-# Why do I want to do this project? 
+## Why do I want to do this project? 
 
 I used to play this game a lot growing up, and would love to implement it by myself. 
 
-# A rough timeline of what will get accomplished and when 
+## A rough timeline of what will get accomplished and when 
 The draft timeline is as follows:
-- week 1: Build a functional prototype version of the game
-- week 2: Add UI/UX enhancements, scoreboard, play/pause functionality
-- week 3: Add multi-users support with leaderboard
 
-# If I were to finish the project early, what extra "stretch goals" could I implement?
+### week 1 
+1. Build a random game map generator to generate a set of blocks given some predefined constraints.
+2. Add a working movable plate and associated control mechanisms (arrow keys/mouse follow)
+3. Add a moving ball object with collisions to the top, left and right walls, and end-game to the bottom wall
+
+### week 2 
+1. Add collisions for the ball with blocks, removing blocks after each collision. 
+2. Add collisions for the ball with the plate, with biased collision response based on where the ball hits the plate. 
+3. Add UI/UX enhancements 
+  - Make the blocks random-colored/row-wise colored 
+  - Give the ball a 3D appearance
+  - Add a layout for displaying user/score
+4. Add play/pause functionality using space bar
+
+### week 3
+1. Add a live functioning scoreboard depending on how many blocks are broken
+2. Create customizable block and ball, and background colors using the [PretzelGui](https://github.com/cwhitney/PretzelGui) Library.
+3. Store high score in a file, so that it is saved even when app is closed. 
+
+## If I were to finish the project early, what extra "stretch goals" could I implement?
 
 Some stretch goals I had in mind are:
 
-- Create customizable block and ball colors (GUI enhancement)
 - Implement sounds for ball bounces, game end/start etc. (UI enchancement)
 - Hardcore mode, where player has to manage 2 balls and 2 plates (one plate above as well which mirrors the bottom plate) (Gameplay enchancement)
