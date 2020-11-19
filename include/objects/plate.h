@@ -8,7 +8,7 @@
 #include <glm/fwd.hpp>
 namespace breakout {
 struct Plate {
-  glm::dvec2 center_pos_;
+  glm::dvec2 bottom_left;
   unsigned int length_;
   const unsigned int kWidth = 5;
 };

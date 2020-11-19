@@ -24,6 +24,10 @@ void World::Render() const {
                                       GetActualPos(brick.top_right_)),
                             5);
   }
+  ci::gl::color(ci::Color(ci::Color("white")));
+  ci::gl::drawSolidRect(ci::Rectf(
+      GetActualPos(plate_.bottom_left),
+      GetActualPos(plate_.bottom_left + dvec2(plate_.length_, plate_.kWidth))));
 }
 
 void World::Update() {
@@ -38,14 +42,14 @@ World::World(const dvec2& bottom_left, const dvec2& top_right) {
   top_right_ = top_right;
   glm::dvec2 midpoint((top_right_.x - bottom_left_.x) / 2, 300);
   ball_ = Ball(midpoint, glm::dvec2(5.0, -5.0));
-  InitializeBricks(bottom_left, top_right);
+  InitializeObjects(bottom_left, top_right);
 }
 
 World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
   ball_ = ball;
-  InitializeBricks(bottom_left, top_right);
+  InitializeObjects(bottom_left, top_right);
 }
 
 void World::TogglePlayPause() {
@@ -83,10 +87,27 @@ const Ball& World::GetBall() const {
   return ball_;
 }
 
-void World::InitializeBricks(const dvec2& bottom_left, const dvec2& top_right) {
+void World::InitializeObjects(const dvec2& bottom_left,
+                              const dvec2& top_right) {
   double length = top_right.x - bottom_left.x;
   double height = bottom_left.y - top_right.y;
   bricks_ = BrickGen::GenerateBricks(kNumBrickRows, dvec2(length, 200),
                                      dvec2(0, height - 500), kBrickStrength);
+  plate_.length_ = 300;
+  plate_.bottom_left.x = ((length - plate_.length_) / 2);
+  plate_.bottom_left.y = height - 40;
+}
+
+void World::OnKeyPress(ci::app::KeyEvent event) {
+  switch (event.getCode()) {
+    case ci::app::KeyEvent::KEY_LEFT:
+    case ci::app::KeyEvent::KEY_a:
+      plate_.bottom_left.x -= kPlateSpeed;
+      break;
+    case ci::app::KeyEvent::KEY_RIGHT:
+    case ci::app::KeyEvent::KEY_d:
+      plate_.bottom_left.x += kPlateSpeed;
+      break;
+  }
 }
 }  // namespace breakout
