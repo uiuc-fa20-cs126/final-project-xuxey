@@ -1,16 +1,19 @@
 #pragma once
 
 #include <objects/ball.h>
+#include <objects/brick.h>
 
 #include <string>
+#include <vector>
 
 #include "cinder/gl/gl.h"
 #include "interface/ui_section.h"
+#include "objects/brick.h"
 
 namespace breakout {
 class World : public UISection {
   Ball ball_;
-  // todo vector of blocks
+  std::vector<Brick> bricks_;
   bool is_playing_ = true;
   void HandleWallCollision();
 

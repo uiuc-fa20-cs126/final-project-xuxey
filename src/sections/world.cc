@@ -1,7 +1,10 @@
 #include <interface/breakout_app.h>
+#include <logic/brick_gen.h>
+#include <objects/brick.h>
 #include <sections/world.h>
 
 #include <glm/gtc/random.hpp>
+#include <vector>
 
 namespace breakout {
 
@@ -15,6 +18,12 @@ void World::Render() const {
   ci::gl::color(ci::Color(ball_.GetColor()));
   ci::gl::drawSolidCircle(GetActualPos(ball_.GetPos()),
                           static_cast<float>(ball_.GetRadius()));
+  for (Brick brick : bricks_) {
+    ci::gl::color(brick.color);
+    ci::gl::drawStrokedRect(ci::Rectf(GetActualPos(brick.bottom_left_),
+                                      GetActualPos(brick.top_right_)),
+                            5);
+  }
 }
 
 void World::Update() {
@@ -29,6 +38,9 @@ World::World(const dvec2& bottom_left, const dvec2& top_right) {
   top_right_ = top_right;
   glm::dvec2 midpoint((top_right_.x - bottom_left_.x) / 2, 300);
   ball_ = Ball(midpoint, glm::dvec2(5.0, -5.0));
+  bricks_ =
+      BrickGen::GenerateBricks(5, dvec2(top_right.x - bottom_left.x, 200),
+                               dvec2(0, bottom_left.y - top_right.y - 500), 1);
 }
 
 World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball) {
