@@ -4,23 +4,24 @@
 namespace breakout {
 
 void UserInterface::RenderUI() const {
-  for (const UISection* section : sections_) {
-    section->Render();
+  for (auto section : sections_) {
+    section.second->Render();
   }
 }
 
 void UserInterface::UpdateUI() const {
-  for (UISection* section : sections_) {
-    section->Update();
+  for (auto section : sections_) {
+    section.second->Update();
   }
 }
 
-void UserInterface::AddUISection(UISection* section) {
-  sections_.push_back(section);
+void UserInterface::AddUISection(std::string id, UISection* section) {
+  sections_.insert({id, section});
 }
 
 void UserInterface::HandleMouseClick(dvec2 mouse_pos) const {
-  for (UISection* section : sections_) {
+  for (auto pair : sections_) {
+    UISection* section = pair.second;
     // Check that mouse_pos is within section boundary
     if (mouse_pos.x > section->GetBottomLeft().x &&
         mouse_pos.x < section->GetTopRight().x &&
@@ -34,8 +35,8 @@ void UserInterface::HandleMouseClick(dvec2 mouse_pos) const {
 }
 
 UserInterface::~UserInterface() {
-  for (UISection* section : sections_) {
-    delete section;
+  for (auto pair : sections_) {
+    delete pair.second;
   }
   sections_.clear();
 }

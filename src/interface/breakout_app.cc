@@ -45,7 +45,7 @@ void BreakoutApp::SetupContainerUI() {
       300);
   world_ =
       new World(Layout::container_bottom_left_, Layout::container_top_right_);
-  user_interface_.AddUISection(world_);
+  user_interface_.AddUISection("world", world_);
 }
 
 void BreakoutApp::SetupButtonUI() {

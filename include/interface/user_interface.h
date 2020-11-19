@@ -8,6 +8,7 @@
 #include <cinder/app/MouseEvent.h>
 
 #include <glm/vec2.hpp>
+#include <unordered_map>
 #include <vector>
 
 #include "ui_section.h"
@@ -18,7 +19,7 @@ using glm::dvec2;
  * User interface class to handle UISection implementations
  */
 class UserInterface {
-  std::vector<UISection*> sections_;
+  std::unordered_map<std::string, UISection*> sections_;
 
  public:
   /**
@@ -28,7 +29,7 @@ class UserInterface {
    */
   void HandleMouseClick(dvec2 mouse_pos) const;
   // Adds a new UISection to the interface
-  void AddUISection(UISection* section);
+  void AddUISection(std::string id, UISection* section);
   // Updates all UISections
   void UpdateUI() const;
   // Renders all UISections
