@@ -70,7 +70,7 @@ list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES}
         src/interface/layout.cc)
 
 # Test files go here
-list(APPEND TEST_FILES)
+list(APPEND TEST_FILES tests/test_ball_collisions.cc)
 
 set(CompilerFlags
         CMAKE_CXX_FLAGS
