@@ -9,7 +9,7 @@
 namespace breakout {
 struct Plate {
   glm::dvec2 bottom_left;
-  unsigned int length_;
+  unsigned int length_ = 300;
   const unsigned int kWidth = 5;
 };
 }  // namespace breakout

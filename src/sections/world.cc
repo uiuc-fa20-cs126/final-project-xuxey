@@ -1,29 +1,27 @@
 #include <interface/breakout_app.h>
 #include <logic/brick_gen.h>
-#include <objects/brick.h>
-#include <sections/world.h>
-
 #include <glm/gtc/random.hpp>
-#include <vector>
 
 namespace breakout {
 
 using glm::dvec2;
 
 void World::Render() const {
-  // Draw Background
+  // Render Background
   ci::gl::color(ci::Color("black"));
   ci::gl::drawSolidRect(ci::Rectf(bottom_left_, top_right_));
-  // Draw Ball
+  // Render Ball
   ci::gl::color(ci::Color(ball_.GetColor()));
   ci::gl::drawSolidCircle(GetActualPos(ball_.GetPos()),
                           static_cast<float>(ball_.GetRadius()));
+  // Render Bricks
   for (Brick brick : bricks_) {
     ci::gl::color(brick.color);
     ci::gl::drawStrokedRect(ci::Rectf(GetActualPos(brick.bottom_left_),
                                       GetActualPos(brick.top_right_)),
                             5);
   }
+  // Render Plate
   ci::gl::color(ci::Color(ci::Color("white")));
   ci::gl::drawSolidRect(ci::Rectf(
       GetActualPos(plate_.bottom_left),
@@ -40,16 +38,14 @@ void World::Update() {
 World::World(const dvec2& bottom_left, const dvec2& top_right) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
-  glm::dvec2 midpoint((top_right_.x - bottom_left_.x) / 2, 300);
-  ball_ = Ball(midpoint, glm::dvec2(5.0, -5.0));
   InitializeObjects(bottom_left, top_right);
 }
 
 World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
-  ball_ = ball;
   InitializeObjects(bottom_left, top_right);
+  ball_ = ball;
 }
 
 void World::TogglePlayPause() {
@@ -65,6 +61,7 @@ void World::HandleWallCollision() {
       ball_.InvertYVelocity();
     }
   }
+  // bottom wall
   if (y_position >= bottom_left_.y - top_right_.y - ball_.GetRadius()) {
     if (ball_.GetVelocity().y > 0) {
       is_playing_ = false;
@@ -83,6 +80,7 @@ void World::HandleWallCollision() {
     }
   }
 }
+
 const Ball& World::GetBall() const {
   return ball_;
 }
@@ -91,11 +89,16 @@ void World::InitializeObjects(const dvec2& bottom_left,
                               const dvec2& top_right) {
   double length = top_right.x - bottom_left.x;
   double height = bottom_left.y - top_right.y;
-  bricks_ = BrickGen::GenerateBricks(kNumBrickRows, dvec2(length, 200),
-                                     dvec2(0, height - 500), kBrickStrength);
-  plate_.length_ = 300;
+  // Initialize Bricks
+  bricks_ = BrickGen::GenerateBricks(kNumBrickRows, dvec2(length, height / 5),
+                                     dvec2(0, height / 2), kBrickStrength);
+  // Initialize Plate
   plate_.bottom_left.x = ((length - plate_.length_) / 2);
-  plate_.bottom_left.y = height - 40;
+  plate_.bottom_left.y = height - height / 40;
+  // Initialize Ball
+  glm::dvec2 midpoint(length / 2, height - (height / 35));
+  ball_ = Ball(midpoint,
+               dvec2(glm::linearRand(-kBallSpeed, kBallSpeed), -kBallSpeed));
 }
 
 void World::OnKeyPress(ci::app::KeyEvent event) {
@@ -108,6 +111,12 @@ void World::OnKeyPress(ci::app::KeyEvent event) {
     case ci::app::KeyEvent::KEY_d:
       plate_.bottom_left.x += kPlateSpeed;
       break;
+  }
+}
+
+void World::HandleBrickCollisions() {
+  for (Brick brick : bricks_) {
+    // todo implement brick collisions
   }
 }
 }  // namespace breakout

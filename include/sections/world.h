@@ -20,9 +20,11 @@ class World : public UISection {
   const double kPlateSpeed = 18.0;
   const size_t kBrickStrength = 1;
   const size_t kNumBrickRows = 5;
+  const double kBallSpeed = 5.0;
   bool is_playing_ = true;
   // ------------------
   void HandleWallCollision();
+  void HandleBrickCollisions();
   void InitializeObjects(const dvec2& bottom_left, const dvec2& top_right);
 
  public:
