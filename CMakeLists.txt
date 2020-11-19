@@ -67,10 +67,12 @@ list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES}
         src/sections/text_section.cc
         src/objects/ball.cc
         src/sections/button.cc
-        src/interface/layout.cc)
+        src/interface/layout.cc
+        src/logic/brick_gen.cc)
 
 # Test files go here
-list(APPEND TEST_FILES tests/test_ball_collisions.cc)
+list(APPEND TEST_FILES tests/test_ball_collisions.cc
+        tests/test_brick_gen.cc)
 
 set(CompilerFlags
         CMAKE_CXX_FLAGS
