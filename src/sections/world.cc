@@ -38,15 +38,14 @@ World::World(const dvec2& bottom_left, const dvec2& top_right) {
   top_right_ = top_right;
   glm::dvec2 midpoint((top_right_.x - bottom_left_.x) / 2, 300);
   ball_ = Ball(midpoint, glm::dvec2(5.0, -5.0));
-  bricks_ =
-      BrickGen::GenerateBricks(5, dvec2(top_right.x - bottom_left.x, 200),
-                               dvec2(0, bottom_left.y - top_right.y - 500), 1);
+  InitializeBricks(bottom_left, top_right);
 }
 
 World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
   ball_ = ball;
+  InitializeBricks(bottom_left, top_right);
 }
 
 void World::TogglePlayPause() {
@@ -62,10 +61,9 @@ void World::HandleWallCollision() {
       ball_.InvertYVelocity();
     }
   }
-  // todo remove bottom wall
   if (y_position >= bottom_left_.y - top_right_.y - ball_.GetRadius()) {
     if (ball_.GetVelocity().y > 0) {
-      ball_.InvertYVelocity();
+      is_playing_ = false;
     }
   }
   // right wall
@@ -83,5 +81,12 @@ void World::HandleWallCollision() {
 }
 const Ball& World::GetBall() const {
   return ball_;
+}
+
+void World::InitializeBricks(const dvec2& bottom_left, const dvec2& top_right) {
+  double length = top_right.x - bottom_left.x;
+  double height = bottom_left.y - top_right.y;
+  bricks_ = BrickGen::GenerateBricks(kNumBrickRows, dvec2(length, 200),
+                                     dvec2(0, height - 500), kBrickStrength);
 }
 }  // namespace breakout

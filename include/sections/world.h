@@ -2,6 +2,7 @@
 
 #include <objects/ball.h>
 #include <objects/brick.h>
+#include <objects/plate.h>
 
 #include <string>
 #include <vector>
@@ -14,8 +15,14 @@ namespace breakout {
 class World : public UISection {
   Ball ball_;
   std::vector<Brick> bricks_;
+  Plate plate_;
+
+  const size_t kBrickStrength = 1;
+  const size_t kNumBrickRows = 5;
   bool is_playing_ = true;
+  // ------------------
   void HandleWallCollision();
+  void InitializeBricks(const dvec2& bottom_left, const dvec2& top_right);
 
  public:
   World(const dvec2& bottom_left, const dvec2& top_right);
