@@ -18,16 +18,23 @@ void World::Render() const {
 }
 
 void World::Update() {
-  if (is_playing_ || true) {
+  if (is_playing_) {
     HandleWallCollision();
     ball_.UpdateNextPosition();
   }
 }
 
-World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball_)
-    : ball_(ball_) {
+World::World(const dvec2& bottom_left, const dvec2& top_right) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
+  glm::dvec2 midpoint((top_right_.x - bottom_left_.x) / 2, 300);
+  ball_ = Ball(midpoint, glm::dvec2(5.0, -5.0));
+}
+
+World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball) {
+  bottom_left_ = bottom_left;
+  top_right_ = top_right;
+  ball_ = ball;
 }
 
 void World::TogglePlayPause() {
@@ -61,5 +68,8 @@ void World::HandleWallCollision() {
       ball_.InvertXVelocity();
     }
   }
+}
+const Ball& World::GetBall() const {
+  return ball_;
 }
 }  // namespace breakout

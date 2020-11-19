@@ -2,7 +2,7 @@
 #include <sections/world.h>
 
 namespace breakout {
-const ci::Color Ball::color_ = ci::Color("blue");
+const ci::Color Ball::color_ = ci::Color("aqua");
 
 const glm::dvec2& Ball::GetPos() const {
   return position_;
@@ -40,6 +40,8 @@ double Ball::GetRadius() const {
   return radius_;
 }
 
-Ball::Ball(Ball const& source) {
+Ball::Ball() {
+  position_ = glm::dvec2(0, 0);
+  velocity_ = glm::dvec2(1, -1);
 }
 }  // namespace breakout

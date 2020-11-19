@@ -23,9 +23,11 @@ class Ball {
   // Color of the particle as displayed in the GUI
   const static ci::Color color_;
   // Radius of the circular particle in pixels
-  const double radius_ = 30;
+  double radius_ = 30;
 
  public:
+  // Constructors
+  Ball();
   Ball(const glm::dvec2& position, const glm::dvec2& velocity);
   // Const-reference Getter for particle position
   const glm::dvec2& GetPos() const;
@@ -45,8 +47,6 @@ class Ball {
   const cinder::Color& GetColor() const;
   // Getter for particle radius
   double GetRadius() const;
-  // Copy Constructor
-  Ball(const Ball& source);
 };
 }  // namespace breakout
 

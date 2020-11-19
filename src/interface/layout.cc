@@ -10,7 +10,7 @@ const dvec2 Layout::bottom_instructions_ =
 const dvec2 Layout::container_bottom_left_ =
     dvec2(kMargin, kWindowHeight - kMargin);
 const dvec2 Layout::container_top_right_ =
-    dvec2(kWindowHeight - kMargin, kMargin);
+    dvec2((2 * kWindowHeight) - kMargin, kMargin);
 
 const dvec2 Layout::clear_bottom_left_ = dvec2(1300, 350);
 const dvec2 Layout::clear_top_right_ = dvec2(1550, 100);
