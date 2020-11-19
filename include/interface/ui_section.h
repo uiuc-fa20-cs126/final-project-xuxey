@@ -5,6 +5,7 @@
 #ifndef IDEAL_GAS_UI_SECTION_H
 #define IDEAL_GAS_UI_SECTION_H
 
+#include <cinder/app/KeyEvent.h>
 #include <cinder/app/MouseEvent.h>
 
 #include <glm/vec2.hpp>
@@ -35,6 +36,8 @@ class UISection {
    * Relative position origin is at bottom left corner.
    */
   virtual void OnClick(glm::dvec2 relative_pos){};
+  // Used to handle key presses
+  virtual void OnKeyPress(ci::app::KeyEvent event){};
   /**
    * Helper function to convert relative position to global app position
    * @param relative_pos relative position within UI, origin at bottom left

@@ -40,4 +40,10 @@ UserInterface::~UserInterface() {
   }
   sections_.clear();
 }
+
+void UserInterface::HandleKeyPress(ci::app::KeyEvent event) const {
+  for (auto pair : sections_) {
+    pair.second->OnKeyPress(event);
+  }
+}
 }  // namespace breakout

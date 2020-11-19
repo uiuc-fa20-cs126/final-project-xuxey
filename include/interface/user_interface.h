@@ -34,6 +34,8 @@ class UserInterface {
   void UpdateUI() const;
   // Renders all UISections
   void RenderUI() const;
+  // Handles Key Presses
+  void HandleKeyPress(ci::app::KeyEvent event) const;
   // Destructor
   virtual ~UserInterface();
 };

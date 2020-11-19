@@ -37,6 +37,7 @@ void BreakoutApp::mouseDown(ci::app::MouseEvent event) {
 }
 
 void BreakoutApp::keyDown(ci::app::KeyEvent event) {
+  user_interface_.HandleKeyPress(event);
 }
 
 void BreakoutApp::SetupContainerUI() {
