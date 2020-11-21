@@ -15,7 +15,7 @@ void World::Render() const {
   ci::gl::drawSolidCircle(GetActualPos(ball_.GetPos()),
                           static_cast<float>(ball_.GetRadius()));
   // Render Bricks
-  for (Brick brick : bricks_) {
+  for (const Brick& brick : bricks_) {
     ci::gl::color(brick.color);
     ci::gl::drawStrokedRect(ci::Rectf(GetActualPos(brick.bottom_left_),
                                       GetActualPos(brick.top_right_)),
