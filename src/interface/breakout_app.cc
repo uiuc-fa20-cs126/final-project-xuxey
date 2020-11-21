@@ -1,5 +1,6 @@
 #include <interface/breakout_app.h>
 #include <interface/layout.h>
+#include <sections/button.h>
 #include <sections/text_section.h>
 
 namespace breakout {
@@ -14,8 +15,9 @@ BreakoutApp::BreakoutApp() {
 }
 
 void BreakoutApp::setup() {
-  SetupContainerUI();
-  SetupButtonUI();
+  SetupGameUI();
+  SetupHomePageUI();
+  UserInterface::active_screen_id_ = "home_screen";
 }
 
 void BreakoutApp::update() {
@@ -40,15 +42,30 @@ void BreakoutApp::keyDown(ci::app::KeyEvent event) {
   UserInterface::HandleKeyPress(event);
 }
 
-void BreakoutApp::SetupContainerUI() {
-  glm::dvec2 midpoint(
-      (Layout::container_top_right_.x - Layout::container_bottom_left_.x) / 2,
-      300);
-  world_ =
-      new World(Layout::container_bottom_left_, Layout::container_top_right_);
-  UserInterface::AddUISection("world", world_);
+void BreakoutApp::SetupGameUI() {
+  UserInterface::AddUISection(
+      "classic_world",
+      new World(Layout::kWorldBottomLeft, Layout::kWorldTopRight));
+  // Register screen on user interface
+  std::vector<std::string> game_sections;
+  game_sections.push_back("classic_world");
+  UserInterface::DefineScreen("game_screen", game_sections);
 }
 
-void BreakoutApp::SetupButtonUI() {
+void BreakoutApp::SetupHomePageUI() {
+  std::vector<std::string> home_sections;
+  home_sections.push_back("press_button");
+  home_sections.push_back("button");
+  UserInterface::AddUISection(
+      home_sections[0],
+      new TextSection("Press the button to start", Layout::kStartTextCenter,
+                      ci::Color("white"), ci::Font("arial", 35)));
+  UserInterface::AddUISection(
+      home_sections[1],
+      new Button(
+          Layout::kStartButtonBottomLeft, Layout::kStartButtonTopRight,
+          []() { UserInterface::active_screen_id_ = "game_screen"; }, "Start"));
+  // Register home screen on user interface
+  UserInterface::DefineScreen("home_screen", home_sections);
 }
 }  // namespace breakout

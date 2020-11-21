@@ -14,9 +14,9 @@ class BreakoutApp : public ci::app::App {
   // Gas Container holding particle states
   static World* world_;
   // Add gas container and instructions to the UI
-  void SetupContainerUI();
+  void SetupGameUI();
   // Add buttons to the UI
-  void SetupButtonUI();
+  void SetupHomePageUI();
 
  public:
   // Constructor
