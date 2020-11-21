@@ -23,11 +23,11 @@ using glm::dvec2;
  * User interface class to handle UISection implementations
  */
 class UserInterface {
-  static string active_screen_id_;
   static unordered_map<string, UISection*> sections_;
   static unordered_map<string, std::vector<string>> screens_;
 
  public:
+  static string active_screen_id_;
   /**
    * Calls the appropriate onClick method based on the UISection region that has
    * been clicked
@@ -49,14 +49,14 @@ class UserInterface {
    * @param section_ids A list of section ids that are rendered when screen is
    * active
    */
-  void DefineScreen(string id, vector<string> section_ids);
+  static void DefineScreen(string id, vector<string> section_ids);
   /**
    * Removes a screen from available screen types.
    * Does nothing if the screen to remove is the active screen, or if the screen
    * with the given id does not exist
    * @param id id of the screen to remove
    */
-  void UndefineScreen(string id);
+  static void UndefineScreen(string id);
   // Destructor
   virtual ~UserInterface();
 };

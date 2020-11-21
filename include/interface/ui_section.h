@@ -19,6 +19,7 @@ class UISection {
  protected:
   dvec2 top_right_;
   dvec2 bottom_left_;
+  bool update_when_inactive = false;
 
  public:
   /**
@@ -48,6 +49,12 @@ class UISection {
   const dvec2& GetTopRight() const;
   // Getter for bottom_left_ position
   const dvec2& GetBottomLeft() const;
+  // Getter for update_when_inactive
+  bool ShouldUpdateWhenInactive() const;
+  // Returns true if the given position is within the section
+  bool IsPositionWithin(dvec2 position);
+  // Converts global position to relative position within section
+  dvec2 ToRelativePos(dvec2 actual_position);
   // Virtual destructor
   virtual ~UISection(){};
 };

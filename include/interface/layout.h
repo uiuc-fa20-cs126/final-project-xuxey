@@ -18,8 +18,13 @@ struct Layout {
   constexpr static double kWindowHeight = 1200;
   // Margin size from the container edge to window edge in pixels
   constexpr static double kMargin = 100;
-  static const dvec2 container_bottom_left_;
-  static const dvec2 container_top_right_;
+  // Game World
+  static const dvec2 kWorldBottomLeft;
+  static const dvec2 kWorldTopRight;
+  // Home Screen
+  static const dvec2 kStartButtonTopRight;
+  static const dvec2 kStartButtonBottomLeft;
+  static const dvec2 kStartTextCenter;
 };
 }  // namespace breakout
 

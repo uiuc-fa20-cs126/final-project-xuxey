@@ -19,15 +19,25 @@ void UserInterface::RenderUI() {
   }
   vector<string> active_screen = screens_.at(active_screen_id_);
   for (auto pair : sections_) {
-    if (count(active_screen.begin(), active_screen.end(), pair.first) > 0) {
+    if (count(active_screen.begin(), active_screen.end(), pair.first) == 1) {
       pair.second->Render();
     }
   }
 }
 
 void UserInterface::UpdateUI() {
+  if (screens_.empty()) {
+    for (auto pair : sections_) {
+      pair.second->Update();
+    }
+    return;
+  }
+  vector<string> active_screen = screens_.at(active_screen_id_);
   for (auto pair : sections_) {
-    pair.second->Update();
+    if (count(active_screen.begin(), active_screen.end(), pair.first) > 0 ||
+        pair.second->ShouldUpdateWhenInactive()) {
+      pair.second->Update();
+    }
   }
 }
 
@@ -36,16 +46,20 @@ void UserInterface::AddUISection(std::string id, UISection* section) {
 }
 
 void UserInterface::HandleMouseClick(dvec2 mouse_pos) {
+  if (screens_.empty()) {
+    for (auto pair : sections_) {
+      if (pair.second->IsPositionWithin(mouse_pos)) {
+        pair.second->OnClick(pair.second->ToRelativePos(mouse_pos));
+      }
+    }
+    return;
+  }
+  vector<string> active_screen = screens_.at(active_screen_id_);
   for (auto pair : sections_) {
-    UISection* section = pair.second;
-    // Check that mouse_pos is within section boundary
-    if (mouse_pos.x > section->GetBottomLeft().x &&
-        mouse_pos.x < section->GetTopRight().x &&
-        mouse_pos.y > section->GetTopRight().y &&
-        mouse_pos.y < section->GetBottomLeft().y) {
-      dvec2 relative_pos(mouse_pos.x - section->GetBottomLeft().x,
-                         mouse_pos.y - section->GetTopRight().y);
-      section->OnClick(relative_pos);
+    if (count(active_screen.begin(), active_screen.end(), pair.first) > 0) {
+      if (pair.second->IsPositionWithin(mouse_pos)) {
+        pair.second->OnClick(pair.second->ToRelativePos(mouse_pos));
+      }
     }
   }
 }
@@ -58,8 +72,18 @@ UserInterface::~UserInterface() {
 }
 
 void UserInterface::HandleKeyPress(ci::app::KeyEvent event) {
+  if (screens_.empty()) {
+    for (auto pair : sections_) {
+      pair.second->OnKeyPress(event);
+    }
+    return;
+  }
+  vector<string> active_screen = screens_.at(active_screen_id_);
   for (auto pair : sections_) {
-    pair.second->OnKeyPress(event);
+    if (count(active_screen.begin(), active_screen.end(), pair.first) > 0 ||
+        pair.second->ShouldUpdateWhenInactive()) {
+      pair.second->OnKeyPress(event);
+    }
   }
 }
 
