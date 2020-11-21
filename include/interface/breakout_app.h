@@ -13,8 +13,6 @@ namespace breakout {
 class BreakoutApp : public ci::app::App {
   // Gas Container holding particle states
   static World* world_;
-  // User Interface
-  UserInterface user_interface_;
   // Add gas container and instructions to the UI
   void SetupContainerUI();
   // Add buttons to the UI

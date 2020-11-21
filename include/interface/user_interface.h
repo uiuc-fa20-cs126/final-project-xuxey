@@ -6,12 +6,12 @@
 #define IDEAL_GAS_USER_INTERFACE_H
 
 #include <cinder/app/MouseEvent.h>
+#include <interface/ui_section.h>
 
 #include <glm/vec2.hpp>
+#include <string>
 #include <unordered_map>
 #include <vector>
-
-#include "ui_section.h"
 
 namespace breakout {
 using glm::dvec2;
@@ -19,7 +19,9 @@ using glm::dvec2;
  * User interface class to handle UISection implementations
  */
 class UserInterface {
-  std::unordered_map<std::string, UISection*> sections_;
+  // static std::string active_screen_;
+  static std::unordered_map<std::string, UISection*> sections_;
+  // static std::unordered_map<std::string, std::vector<std::string>> screens_;
 
  public:
   /**
@@ -27,15 +29,15 @@ class UserInterface {
    * been clicked
    * @param mouse_pos position of the mouse in the app, origin top left
    */
-  void HandleMouseClick(dvec2 mouse_pos) const;
+  static void HandleMouseClick(dvec2 mouse_pos);
   // Adds a new UISection to the interface
-  void AddUISection(std::string id, UISection* section);
+  static void AddUISection(std::string id, UISection* section);
   // Updates all UISections
-  void UpdateUI() const;
+  static void UpdateUI();
   // Renders all UISections
-  void RenderUI() const;
+  static void RenderUI();
   // Handles Key Presses
-  void HandleKeyPress(ci::app::KeyEvent event) const;
+  static void HandleKeyPress(ci::app::KeyEvent event);
   // Destructor
   virtual ~UserInterface();
 };

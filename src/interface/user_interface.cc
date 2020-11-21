@@ -3,15 +3,17 @@
 
 namespace breakout {
 
-void UserInterface::RenderUI() const {
-  for (auto section : sections_) {
-    section.second->Render();
+std::unordered_map<std::string, UISection*> UserInterface::sections_;
+
+void UserInterface::RenderUI() {
+  for (auto pair : sections_) {
+    pair.second->Render();
   }
 }
 
-void UserInterface::UpdateUI() const {
-  for (auto section : sections_) {
-    section.second->Update();
+void UserInterface::UpdateUI() {
+  for (auto pair : sections_) {
+    pair.second->Update();
   }
 }
 
@@ -19,7 +21,7 @@ void UserInterface::AddUISection(std::string id, UISection* section) {
   sections_.insert({id, section});
 }
 
-void UserInterface::HandleMouseClick(dvec2 mouse_pos) const {
+void UserInterface::HandleMouseClick(dvec2 mouse_pos) {
   for (auto pair : sections_) {
     UISection* section = pair.second;
     // Check that mouse_pos is within section boundary
@@ -41,7 +43,7 @@ UserInterface::~UserInterface() {
   sections_.clear();
 }
 
-void UserInterface::HandleKeyPress(ci::app::KeyEvent event) const {
+void UserInterface::HandleKeyPress(ci::app::KeyEvent event) {
   for (auto pair : sections_) {
     pair.second->OnKeyPress(event);
   }

@@ -19,13 +19,13 @@ void BreakoutApp::setup() {
 }
 
 void BreakoutApp::update() {
-  user_interface_.UpdateUI();
+  UserInterface::UpdateUI();
 }
 
 void BreakoutApp::draw() {
   // Gray background
   ci::gl::clear(ci::Color8u(51, 51, 51));
-  user_interface_.RenderUI();
+  UserInterface::RenderUI();
 }
 
 void BreakoutApp::mouseDrag(ci::app::MouseEvent event) {
@@ -33,11 +33,11 @@ void BreakoutApp::mouseDrag(ci::app::MouseEvent event) {
 }
 
 void BreakoutApp::mouseDown(ci::app::MouseEvent event) {
-  user_interface_.HandleMouseClick(event.getPos());
+  UserInterface::HandleMouseClick(event.getPos());
 }
 
 void BreakoutApp::keyDown(ci::app::KeyEvent event) {
-  user_interface_.HandleKeyPress(event);
+  UserInterface::HandleKeyPress(event);
 }
 
 void BreakoutApp::SetupContainerUI() {
@@ -46,7 +46,7 @@ void BreakoutApp::SetupContainerUI() {
       300);
   world_ =
       new World(Layout::container_bottom_left_, Layout::container_top_right_);
-  user_interface_.AddUISection("world", world_);
+  UserInterface::AddUISection("world", world_);
 }
 
 void BreakoutApp::SetupButtonUI() {
