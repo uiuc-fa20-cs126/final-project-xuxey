@@ -90,3 +90,15 @@ TEST_CASE("Ball collides with walls", "[walls]") {
     }
   }
 }
+
+TEST_CASE("Ball not colliding") {
+  dvec2 position(50.0, 50.0);
+  dvec2 velocity(0.7, 0.5);
+
+  Ball ball(position, velocity);
+  World world(dvec2(0, 100), dvec2(100, 0), ball);
+
+  world.Update();
+  REQUIRE(world.GetBall().GetVelocity() == velocity);
+  REQUIRE(world.GetBall().GetPos() == position + velocity);
+}
