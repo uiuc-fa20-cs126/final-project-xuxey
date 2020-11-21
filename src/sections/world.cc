@@ -1,5 +1,7 @@
 #include <interface/breakout_app.h>
 #include <logic/brick_gen.h>
+#include <sections/world.h>
+
 #include <glm/gtc/random.hpp>
 
 namespace breakout {
@@ -64,7 +66,7 @@ void World::HandleWallCollision() {
   // bottom wall
   if (y_position >= bottom_left_.y - top_right_.y - ball_.GetRadius()) {
     if (ball_.GetVelocity().y > 0) {
-      is_playing_ = false;
+      HandleGameEnd();
     }
   }
   // right wall
@@ -118,5 +120,10 @@ void World::HandleBrickCollisions() {
   for (Brick brick : bricks_) {
     // todo implement brick collisions
   }
+}
+
+void World::HandleGameEnd() {
+  InitializeObjects(bottom_left_, top_right_);
+  UserInterface::active_screen_id_ = "home_screen";
 }
 }  // namespace breakout
