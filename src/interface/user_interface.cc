@@ -1,13 +1,27 @@
 
 #include <interface/user_interface.h>
+using std::count;
+using std::string;
+using std::unordered_map;
+using std::vector;
 
 namespace breakout {
-
-std::unordered_map<std::string, UISection*> UserInterface::sections_;
+string UserInterface::active_screen_id_;
+unordered_map<string, std::vector<string>> UserInterface::screens_;
+unordered_map<string, UISection*> UserInterface::sections_;
 
 void UserInterface::RenderUI() {
+  if (screens_.empty()) {
+    for (auto pair : sections_) {
+      pair.second->Render();
+    }
+    return;
+  }
+  vector<string> active_screen = screens_.at(active_screen_id_);
   for (auto pair : sections_) {
-    pair.second->Render();
+    if (count(active_screen.begin(), active_screen.end(), pair.first) > 0) {
+      pair.second->Render();
+    }
   }
 }
 
@@ -46,6 +60,16 @@ UserInterface::~UserInterface() {
 void UserInterface::HandleKeyPress(ci::app::KeyEvent event) {
   for (auto pair : sections_) {
     pair.second->OnKeyPress(event);
+  }
+}
+
+void UserInterface::DefineScreen(string id, vector<string> section_ids) {
+  screens_.insert({id, section_ids});
+}
+
+void UserInterface::UndefineScreen(string id) {
+  if (screens_.find(id) != screens_.end() && id != active_screen_id_) {
+    screens_.erase(id);
   }
 }
 }  // namespace breakout
