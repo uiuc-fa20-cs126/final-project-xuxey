@@ -11,7 +11,7 @@
 namespace breakout {
 class BrickGen {
   constexpr static float kPadding = 20;
-  constexpr static float kAvgBrickLength = 250;
+  constexpr static float kAvgBrickLength = 200;
   static std::vector<Brick> GenerateRow(int num_bricks, double brick_height,
                                         double row_length,
                                         dvec2 row_bottom_left,

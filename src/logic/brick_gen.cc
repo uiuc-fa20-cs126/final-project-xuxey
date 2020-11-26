@@ -14,11 +14,11 @@ std::vector<Brick> BrickGen::GenerateBricks(size_t num_rows, dvec2 top_right,
   int num_bricks =
       static_cast<int>((row_length - kPadding) / (kAvgBrickLength + kPadding));
   double brick_height = (total_height - ((num_rows - 1) * kPadding)) / num_rows;
-  // preallocate memory
+
   bricks.reserve(num_bricks * num_rows);
   dvec2 row_bottom_left = bottom_left + dvec2(kPadding, 0);
+
   for (size_t i = 0; i < num_rows; i++) {
-    // Build row
     std::vector<Brick> row =
         GenerateRow(num_bricks, brick_height, row_length - (2 * kPadding),
                     row_bottom_left, max_brick_strength);

@@ -25,7 +25,7 @@ class World : public UISection {
   // ------------------
   void HandleWallCollision();
   void HandleBrickCollisions();
-  void InitializeObjects(const dvec2& bottom_left, const dvec2& top_right);
+  void InitializeObjects();
   void HandleGameEnd();
 
  public:

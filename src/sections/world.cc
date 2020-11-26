@@ -40,13 +40,13 @@ void World::Update() {
 World::World(const dvec2& bottom_left, const dvec2& top_right) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
-  InitializeObjects(bottom_left, top_right);
+  InitializeObjects();
 }
 
 World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
-  InitializeObjects(bottom_left, top_right);
+  InitializeObjects();
   ball_ = ball;
 }
 
@@ -87,10 +87,9 @@ const Ball& World::GetBall() const {
   return ball_;
 }
 
-void World::InitializeObjects(const dvec2& bottom_left,
-                              const dvec2& top_right) {
-  double length = top_right.x - bottom_left.x;
-  double height = bottom_left.y - top_right.y;
+void World::InitializeObjects() {
+  double length = top_right_.x - bottom_left_.x;
+  double height = bottom_left_.y - top_right_.y;
   // Initialize Bricks
   bricks_ = BrickGen::GenerateBricks(kNumBrickRows, dvec2(length, height / 5),
                                      dvec2(0, height / 2), kBrickStrength);
@@ -123,7 +122,7 @@ void World::HandleBrickCollisions() {
 }
 
 void World::HandleGameEnd() {
-  InitializeObjects(bottom_left_, top_right_);
+  InitializeObjects();
   UserInterface::active_screen_id_ = "home_screen";
 }
 }  // namespace breakout
