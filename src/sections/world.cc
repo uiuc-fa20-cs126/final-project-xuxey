@@ -50,6 +50,15 @@ World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball) {
   ball_ = ball;
 }
 
+World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball,
+             std::vector<Brick> bricks) {
+  bottom_left_ = bottom_left;
+  top_right_ = top_right;
+  InitializeObjects();
+  ball_ = ball;
+  bricks_ = bricks;
+}
+
 void World::TogglePlayPause() {
   is_playing_ = !is_playing_;
 }

@@ -72,6 +72,7 @@ list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES}
 
 # Test files go here
 list(APPEND TEST_FILES tests/test_ball_collisions.cc
+        tests/test_brick_collisions.cc
         tests/test_brick_gen.cc)
 
 set(CompilerFlags
