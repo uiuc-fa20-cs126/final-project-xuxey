@@ -8,6 +8,7 @@ using breakout::World;
 using glm::dvec2;
 
 TEST_CASE("Ball collides with walls", "[walls]") {
+  std::vector<breakout::Brick> empty_bricks;
   SECTION("Ball collides with top wall") {
     dvec2 position(50.0, 70.0);
     dvec2 velocity(0.7, 0.5);
@@ -15,7 +16,7 @@ TEST_CASE("Ball collides with walls", "[walls]") {
     dvec2 expected_position = position + expected_velocity;
 
     Ball ball(position, velocity);
-    World world(dvec2(0, 100), dvec2(100, 0), ball);
+    World world(dvec2(0, 100), dvec2(100, 0), ball, empty_bricks);
 
     world.Update();
     REQUIRE(world.GetBall().GetVelocity() == expected_velocity);
@@ -35,7 +36,7 @@ TEST_CASE("Ball collides with walls", "[walls]") {
     dvec2 expected_position = position + expected_velocity;
 
     Ball ball(position, velocity);
-    World world(dvec2(0, 100), dvec2(100, 0), ball);
+    World world(dvec2(0, 100), dvec2(100, 0), ball, empty_bricks);
 
     world.Update();
     REQUIRE(world.GetBall().GetVelocity() == expected_velocity);
@@ -55,7 +56,7 @@ TEST_CASE("Ball collides with walls", "[walls]") {
     dvec2 expected_position = position + expected_velocity;
 
     Ball ball(position, velocity);
-    World world(dvec2(0, 100), dvec2(100, 0), ball);
+    World world(dvec2(0, 100), dvec2(100, 0), ball, empty_bricks);
 
     world.Update();
     REQUIRE(world.GetBall().GetVelocity() == expected_velocity);
@@ -76,7 +77,7 @@ TEST_CASE("Ball collides with walls", "[walls]") {
     dvec2 expected_position = position + expected_velocity;
 
     Ball ball(position, velocity);
-    World world(dvec2(0, 100), dvec2(100, 0), ball);
+    World world(dvec2(0, 100), dvec2(100, 0), ball, empty_bricks);
 
     world.Update();
     REQUIRE(world.GetBall().GetVelocity() == expected_velocity);
@@ -92,11 +93,12 @@ TEST_CASE("Ball collides with walls", "[walls]") {
 }
 
 TEST_CASE("Ball not colliding") {
+  std::vector<breakout::Brick> empty_bricks;
   dvec2 position(50.0, 50.0);
   dvec2 velocity(0.7, 0.5);
 
   Ball ball(position, velocity);
-  World world(dvec2(0, 100), dvec2(100, 0), ball);
+  World world(dvec2(0, 100), dvec2(100, 0), ball, empty_bricks);
 
   world.Update();
   REQUIRE(world.GetBall().GetVelocity() == velocity);
