@@ -33,6 +33,7 @@ void World::Render() const {
 void World::Update() {
   if (is_playing_) {
     HandleWallCollision();
+    HandleBrickCollisions();
     ball_.UpdateNextPosition();
   }
 }
@@ -125,8 +126,43 @@ void World::OnKeyPress(ci::app::KeyEvent event) {
 }
 
 void World::HandleBrickCollisions() {
-  for (Brick brick : bricks_) {
-    // todo implement brick collisions
+  dvec2 ball_pos = GetActualPos(ball_.GetPos());
+  auto brick_iterator = bricks_.begin();
+  for (const Brick& brick : bricks_) {
+    bool flipX = false;
+    bool flipY = false;
+    dvec2 nearest_edge = ball_pos;
+    dvec2 brick_top_right = GetActualPos(brick.top_right_);
+    dvec2 brick_bottom_left = GetActualPos(brick.bottom_left_);
+
+    if (ball_pos.x < brick_bottom_left.x) {
+      nearest_edge.x = brick_bottom_left.x;
+      flipX = true;
+    }  // left edge
+    else if (ball_pos.x > brick_top_right.x) {
+      nearest_edge.x = brick_top_right.x;
+      flipX = true;
+    }  // right edge
+    if (ball_pos.y < brick_top_right.y) {
+      nearest_edge.y = brick_top_right.y;
+      flipY = true;
+    }  // top edge
+    else if (ball_pos.y > brick_bottom_left.y) {
+      nearest_edge.y = brick_bottom_left.y;
+      flipY = true;
+    }  // bottom edge
+
+    if (glm::distance(nearest_edge, ball_pos) <= ball_.GetRadius()) {
+      if (flipX) {
+        ball_.InvertXVelocity();
+      }
+      if (flipY) {
+        ball_.InvertYVelocity();
+      }
+      bricks_.erase(brick_iterator);
+      break;
+    }
+    brick_iterator++;
   }
 }
 

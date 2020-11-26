@@ -27,7 +27,6 @@ class World : public UISection {
   void HandleBrickCollisions();
   void InitializeObjects();
   void HandleGameEnd();
-
  public:
   World(const dvec2& bottom_left, const dvec2& top_right);
   World(const dvec2& bottom_left, const dvec2& top_right, Ball ball);
@@ -39,6 +38,7 @@ class World : public UISection {
   void OnClick(glm::dvec2 relative_pos) override{};
   void OnKeyPress(ci::app::KeyEvent event) override;
   const Ball& GetBall() const;
+  void HandlePlateCollision();
 };
 
 }  // namespace breakout
