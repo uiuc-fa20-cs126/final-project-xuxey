@@ -54,17 +54,13 @@ void BreakoutApp::SetupGameUI() {
 
 void BreakoutApp::SetupHomePageUI() {
   std::vector<std::string> home_sections;
-  home_sections.push_back("press_button");
   home_sections.push_back("button");
   UserInterface::AddUISection(
       home_sections[0],
-      new TextSection("Press the button to start", Layout::kStartTextCenter,
-                      ci::Color("white"), ci::Font("arial", 35)));
-  UserInterface::AddUISection(
-      home_sections[1],
       new Button(
           Layout::kStartButtonBottomLeft, Layout::kStartButtonTopRight,
-          []() { UserInterface::active_screen_id_ = "game_screen"; }, "Start"));
+          []() { UserInterface::active_screen_id_ = "game_screen"; }, "Start",
+          ci::Color8u(51, 51, 51)));
   // Register home screen on user interface
   UserInterface::DefineScreen("home_screen", home_sections);
 }
