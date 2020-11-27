@@ -33,20 +33,20 @@ class Ball {
   const glm::dvec2& GetPos() const;
   // Const-reference Getter for particle velocity
   const glm::dvec2& GetVelocity() const;
-  /**
-   * Updates the particle position by one time frame
-   */
+  // Updates the particle position by one time frame
   void UpdateNextPosition();
   // Negates the X component of the particle velocity
   void InvertXVelocity();
   // Negates the Y component of the particle velocity
   void InvertYVelocity();
-  // Gets the predicted position of the particle in the next time frame
+  // Gets the predicted position of the ball in the next time frame
   const glm::dvec2 GetNextPosition() const;
-  // Getter for particle color
+  // Getter for bal color
   const cinder::Color& GetColor() const;
-  // Getter for particle radius
+  // Getter for ball radius
   double GetRadius() const;
+  // Setter for
+  void SetVelocity(const glm::dvec2& velocity);
 };
 }  // namespace breakout
 

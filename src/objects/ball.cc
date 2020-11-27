@@ -44,4 +44,8 @@ Ball::Ball() {
   position_ = glm::dvec2(0, 0);
   velocity_ = glm::dvec2(1, -1);
 }
+
+void Ball::SetVelocity(const dvec2& velocity) {
+  velocity_ = velocity;
+}
 }  // namespace breakout

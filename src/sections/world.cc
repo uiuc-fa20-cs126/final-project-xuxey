@@ -32,6 +32,7 @@ void World::Render() const {
 
 void World::Update() {
   if (is_playing_) {
+    HandlePlateCollision();
     HandleWallCollision();
     HandleBrickCollisions();
     ball_.UpdateNextPosition();
@@ -107,7 +108,7 @@ void World::InitializeObjects() {
   plate_.bottom_left.x = ((length - plate_.length_) / 2);
   plate_.bottom_left.y = height - height / 40;
   // Initialize Ball
-  glm::dvec2 midpoint(length / 2, height - (height / 35));
+  glm::dvec2 midpoint(length / 2, height - (height / 25));
   ball_ = Ball(midpoint,
                dvec2(glm::linearRand(-kBallSpeed, kBallSpeed), -kBallSpeed));
 }
@@ -163,6 +164,20 @@ void World::HandleBrickCollisions() {
       break;
     }
     brick_iterator++;
+  }
+}
+
+void World::HandlePlateCollision() {
+  if (ball_.GetPos().x > plate_.bottom_left.x &&
+      ball_.GetPos().x < plate_.bottom_left.x + plate_.length_ &&
+      ball_.GetVelocity().y > 0 &&
+      plate_.bottom_left.y + plate_.kWidth - ball_.GetPos().y <=
+          ball_.GetRadius()) {
+    double plate_center_x = plate_.bottom_left.x + (plate_.length_ / 2);
+    double direction_weight =
+        (ball_.GetPos().x - plate_center_x) / (plate_.length_ / 2);
+    ball_.SetVelocity(
+        dvec2(direction_weight * kBallSpeed, -ball_.GetVelocity().y));
   }
 }
 
