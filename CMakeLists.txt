@@ -69,7 +69,6 @@ list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES}
         src/sections/button.cc
         src/interface/layout.cc
         src/logic/brick_gen.cc
-        src/logic/brick_schema.cc
         src/logic/classic_schema.cc)
 
 # Test files go here

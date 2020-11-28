@@ -117,14 +117,19 @@ void World::InitializeObjects() {
 }
 
 void World::OnKeyPress(ci::app::KeyEvent event) {
+  dvec2 plate_pos = GetActualPos(plate_.bottom_left);
   switch (event.getCode()) {
     case ci::app::KeyEvent::KEY_LEFT:
     case ci::app::KeyEvent::KEY_a:
-      plate_.bottom_left.x -= kPlateSpeed;
+      if (plate_pos.x - kPlateSpeed > bottom_left_.x) {
+        plate_.bottom_left.x -= kPlateSpeed;
+      }
       break;
     case ci::app::KeyEvent::KEY_RIGHT:
     case ci::app::KeyEvent::KEY_d:
-      plate_.bottom_left.x += kPlateSpeed;
+      if (plate_pos.x + plate_.length_ + kPlateSpeed < top_right_.x) {
+        plate_.bottom_left.x += kPlateSpeed;
+      }
       break;
   }
 }
