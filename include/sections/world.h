@@ -18,7 +18,6 @@ class World : public UISection {
   Plate plate_;
 
   const double kPlateSpeed = 18.0;
-  const size_t kBrickStrength = 1;
   const size_t kNumBrickRows = 5;
   const double kBallSpeed = 5.0;
   bool is_playing_ = true;

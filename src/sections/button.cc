@@ -8,9 +8,8 @@
 namespace fs = std::experimental::filesystem;
 namespace breakout {
 
-breakout::Button::Button(dvec2 bottom_left, dvec2 top_right,
-                         std::function<void(void)> on_click,
-                         std::string label) {
+Button::Button(dvec2 bottom_left, dvec2 top_right,
+               std::function<void(void)> on_click, std::string label) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
   on_click_ = on_click;
@@ -18,9 +17,9 @@ breakout::Button::Button(dvec2 bottom_left, dvec2 top_right,
   background_color_ = ci::Color8u(34, 34, 34);
 }
 
-breakout::Button::Button(dvec2 bottom_left, dvec2 top_right,
-                         std::function<void(void)> on_click, std::string label,
-                         ci::Color color) {
+Button::Button(dvec2 bottom_left, dvec2 top_right,
+               std::function<void(void)> on_click, std::string label,
+               ci::Color color) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
   on_click_ = on_click;

@@ -1,5 +1,6 @@
 #include <interface/breakout_app.h>
 #include <logic/brick_gen.h>
+#include <logic/classic_schema.h>
 #include <sections/world.h>
 
 #include <glm/gtc/random.hpp>
@@ -18,7 +19,7 @@ void World::Render() const {
                           static_cast<float>(ball_.GetRadius()));
   // Render Bricks
   for (const Brick& brick : bricks_) {
-    ci::gl::color(brick.color);
+    ci::gl::color(brick.color_);
     ci::gl::drawStrokedRect(ci::Rectf(GetActualPos(brick.bottom_left_),
                                       GetActualPos(brick.top_right_)),
                             5);
@@ -46,6 +47,7 @@ World::World(const dvec2& bottom_left, const dvec2& top_right) {
 }
 
 World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball) {
+  // todo remove
   bottom_left_ = bottom_left;
   top_right_ = top_right;
   InitializeObjects();
@@ -101,9 +103,10 @@ const Ball& World::GetBall() const {
 void World::InitializeObjects() {
   double length = top_right_.x - bottom_left_.x;
   double height = bottom_left_.y - top_right_.y;
+  ClassicSchema schema;
   // Initialize Bricks
   bricks_ = BrickGen::GenerateBricks(kNumBrickRows, dvec2(length, height / 5),
-                                     dvec2(0, height / 2), kBrickStrength);
+                                     dvec2(0, height / 2), schema);
   // Initialize Plate
   plate_.bottom_left.x = ((length - plate_.length_) / 2);
   plate_.bottom_left.y = height - height / 40;
@@ -129,7 +132,7 @@ void World::OnKeyPress(ci::app::KeyEvent event) {
 void World::HandleBrickCollisions() {
   dvec2 ball_pos = GetActualPos(ball_.GetPos());
   auto brick_iterator = bricks_.begin();
-  for (const Brick& brick : bricks_) {
+  for (Brick& brick : bricks_) {
     bool flipX = false;
     bool flipY = false;
     dvec2 nearest_edge = ball_pos;
@@ -160,8 +163,12 @@ void World::HandleBrickCollisions() {
       if (flipY) {
         ball_.InvertYVelocity();
       }
-      bricks_.erase(brick_iterator);
-      break;
+      --brick.strength;
+      if (brick.strength == 0) {
+        bricks_.erase(brick_iterator);
+        break;
+      }
+      brick.color_ = ClassicSchema().GetBrickColor(brick.strength);
     }
     brick_iterator++;
   }

@@ -5,6 +5,7 @@
 #ifndef FINAL_PROJECT_BRICK_GEN_H
 #define FINAL_PROJECT_BRICK_GEN_H
 
+#include <logic/brick_schema.h>
 #include <objects/brick.h>
 
 #include <vector>
@@ -15,14 +16,15 @@ class BrickGen {
   static std::vector<Brick> GenerateRow(int num_bricks, double brick_height,
                                         double row_length,
                                         dvec2 row_bottom_left,
-                                        size_t brick_strength);
+                                        size_t brick_strength,
+                                        BrickSchema& schema);
 
  public:
-  static std::vector<Brick> GenerateBricks(size_t num_rows, dvec2 top_right,
-                                           dvec2 bottom_left,
-                                           size_t max_brick_strength);
   static const float GetKPadding();
   static const float getKMinBrickLength();
+  static std::vector<Brick> GenerateBricks(size_t num_rows, dvec2 top_right,
+                                           dvec2 bottom_left,
+                                           breakout::BrickSchema& schema);
 };
 }  // namespace breakout
 
