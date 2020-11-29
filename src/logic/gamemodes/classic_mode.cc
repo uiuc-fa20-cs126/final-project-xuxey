@@ -2,11 +2,11 @@
 // Created by soham on 11/27/2020.
 //
 
-#include <logic/classic_schema.h>
+#include <logic/gamemodes/classic_mode.h>
 
 namespace breakout {
 
-ci::Color ClassicSchema::GetBrickColor(size_t strength) {
+ci::Color ClassicMode::GetBrickColor(size_t strength) {
   switch (strength) {
     case 1:
       return ci::Color("white");
@@ -18,7 +18,7 @@ ci::Color ClassicSchema::GetBrickColor(size_t strength) {
       return ci::Color("red");
   }
 }
-size_t ClassicSchema::GetBrickStrength(size_t row_index, Brick& brick) {
+size_t ClassicMode::GetBrickStrength(size_t row_index, Brick& brick) {
   switch (row_index) {
     case 0:
     case 1:

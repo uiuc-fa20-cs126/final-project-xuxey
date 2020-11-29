@@ -1,6 +1,6 @@
 #include <cinder/Rand.h>
 #include <logic/brick_gen.h>
-#include <logic/brick_schema.h>
+#include <logic/game_mode.h>
 #include <objects/brick.h>
 
 #include <vector>
@@ -8,7 +8,7 @@
 namespace breakout {
 std::vector<Brick> BrickGen::GenerateBricks(size_t num_rows, dvec2 top_right,
                                             dvec2 bottom_left,
-                                            BrickSchema& schema) {
+                                            GameMode& schema) {
   std::vector<Brick> bricks;
   double row_length = top_right.x - bottom_left.x;
   double total_height = bottom_left.y - top_right.y;
@@ -32,8 +32,7 @@ std::vector<Brick> BrickGen::GenerateBricks(size_t num_rows, dvec2 top_right,
 std::vector<Brick> BrickGen::GenerateRow(int num_bricks, double brick_height,
                                          double row_length,
                                          dvec2 row_bottom_left,
-                                         size_t row_index,
-                                         BrickSchema& schema) {
+                                         size_t row_index, GameMode& schema) {
   std::vector<Brick> bricks;
   float max_stretch = static_cast<float>((row_length / (2 * num_bricks)));
   dvec2 brick_bottom_left = row_bottom_left;

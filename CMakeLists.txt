@@ -69,7 +69,8 @@ list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES}
         src/sections/button.cc
         src/interface/layout.cc
         src/logic/brick_gen.cc
-        src/logic/classic_schema.cc)
+        src/logic/gamemodes/easy_mode.cc
+        src/logic/gamemodes/classic_mode.cc)
 
 # Test files go here
 list(APPEND TEST_FILES tests/test_ball_collisions.cc
