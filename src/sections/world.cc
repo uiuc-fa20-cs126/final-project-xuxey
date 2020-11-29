@@ -55,10 +55,6 @@ World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball,
   bricks_ = bricks;
 }
 
-void World::TogglePlayPause() {
-  is_playing_ = !is_playing_;
-}
-
 void World::HandleWallCollision() {
   double x_position = ball_.GetNextPosition().x;
   double y_position = ball_.GetNextPosition().y;
@@ -123,6 +119,9 @@ void World::OnKeyPress(ci::app::KeyEvent event) {
         plate_.bottom_left.x += kPlateSpeed;
       }
       break;
+    case ci::app::KeyEvent::KEY_SPACE:
+      is_playing_ = !is_playing_;
+      break;
   }
 }
 
@@ -178,10 +177,9 @@ void World::HandlePlateCollision() {
       plate_.bottom_left.y + plate_.kWidth - ball_.GetPos().y <=
           ball_.GetRadius()) {
     double plate_center_x = plate_.bottom_left.x + (plate_.length_ / 2);
-    double direction_weight =
+    double x_direction =
         (ball_.GetPos().x - plate_center_x) / (plate_.length_ / 2);
-    ball_.SetVelocity(
-        dvec2(direction_weight * kBallSpeed, -ball_.GetVelocity().y));
+    ball_.SetVelocity(dvec2(x_direction * kBallSpeed, -ball_.GetVelocity().y));
   }
 }
 
