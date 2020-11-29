@@ -46,14 +46,6 @@ World::World(const dvec2& bottom_left, const dvec2& top_right) {
   InitializeObjects();
 }
 
-World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball) {
-  // todo remove
-  bottom_left_ = bottom_left;
-  top_right_ = top_right;
-  InitializeObjects();
-  ball_ = ball;
-}
-
 World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball,
              std::vector<Brick> bricks) {
   bottom_left_ = bottom_left;
