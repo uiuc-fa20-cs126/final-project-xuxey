@@ -42,21 +42,10 @@ class UserInterface {
   static void RenderUI();
   // Handles Key Presses
   static void HandleKeyPress(ci::app::KeyEvent event);
-  /**
-   * Adds a screen to the user interface.
-   * @param id screen id, must be unique. Non unique id will overwrite the
-   * previous screen.
-   * @param section_ids A list of section ids that are rendered when screen is
-   * active
-   */
+  // Initialize sections on setup
+  static void SetupUI();
   static void DefineScreen(string id, vector<string> section_ids);
-  /**
-   * Removes a screen from available screen types.
-   * Does nothing if the screen to remove is the active screen, or if the screen
-   * with the given id does not exist
-   * @param id id of the screen to remove
-   */
-  static void UndefineScreen(string id);
+  static UISection* AccessSectionById(string id);
   // Destructor
   virtual ~UserInterface();
 };

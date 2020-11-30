@@ -39,6 +39,8 @@ class UISection {
   virtual void OnClick(glm::dvec2 relative_pos){};
   // Used to handle key presses
   virtual void OnKeyPress(ci::app::KeyEvent event){};
+  // Used to set up section members
+  virtual void Setup(){};
   /**
    * Helper function to convert relative position to global app position
    * @param relative_pos relative position within UI, origin at bottom left

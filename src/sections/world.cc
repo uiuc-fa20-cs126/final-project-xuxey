@@ -43,14 +43,14 @@ void World::Update() {
 World::World(const dvec2& bottom_left, const dvec2& top_right) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
-  InitializeObjects();
+  Setup();
 }
 
 World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball,
              std::vector<Brick> bricks) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
-  InitializeObjects();
+  Setup();
   ball_ = ball;
   bricks_ = bricks;
 }
@@ -86,22 +86,6 @@ void World::HandleWallCollision() {
 
 const Ball& World::GetBall() const {
   return ball_;
-}
-
-void World::InitializeObjects() {
-  double length = top_right_.x - bottom_left_.x;
-  double height = bottom_left_.y - top_right_.y;
-  // Initialize Bricks
-  bricks_ = BrickGen::GenerateBricks(kNumBrickRows, dvec2(length, height / 5),
-                                     dvec2(0, height / 2),
-                                     BreakoutApp::GetActiveGameMode());
-  // Initialize Plate
-  plate_.bottom_left.x = ((length - plate_.length_) / 2);
-  plate_.bottom_left.y = height - height / 40;
-  // Initialize Ball
-  glm::dvec2 midpoint(length / 2, height - (height / 25));
-  ball_ = Ball(midpoint,
-               dvec2(glm::linearRand(-kBallSpeed, kBallSpeed), -kBallSpeed));
 }
 
 void World::OnKeyPress(ci::app::KeyEvent event) {
@@ -185,7 +169,22 @@ void World::HandlePlateCollision() {
 }
 
 void World::HandleGameEnd() {
-  InitializeObjects();
+  Setup();
   UserInterface::active_screen_id_ = "home_screen";
+}
+void World::Setup() {
+  double length = top_right_.x - bottom_left_.x;
+  double height = bottom_left_.y - top_right_.y;
+  // Initialize Bricks
+  bricks_ = BrickGen::GenerateBricks(kNumBrickRows, dvec2(length, height / 5),
+                                     dvec2(0, height / 2),
+                                     BreakoutApp::GetActiveGameMode());
+  // Initialize Plate
+  plate_.bottom_left.x = ((length - plate_.length_) / 2);
+  plate_.bottom_left.y = height - height / 40;
+  // Initialize Ball
+  glm::dvec2 midpoint(length / 2, height - (height / 25));
+  ball_ = Ball(midpoint,
+               dvec2(glm::linearRand(-kBallSpeed, kBallSpeed), -kBallSpeed));
 }
 }  // namespace breakout

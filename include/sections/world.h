@@ -24,7 +24,6 @@ class World : public UISection {
   // ------------------
   void HandleWallCollision();
   void HandleBrickCollisions();
-  void InitializeObjects();
   void HandleGameEnd();
  public:
   World(const dvec2& bottom_left, const dvec2& top_right);
@@ -36,6 +35,7 @@ class World : public UISection {
   void OnKeyPress(ci::app::KeyEvent event) override;
   const Ball& GetBall() const;
   void HandlePlateCollision();
+  void Setup() override;
 };
 
 }  // namespace breakout

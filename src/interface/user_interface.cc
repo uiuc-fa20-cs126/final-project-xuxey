@@ -91,9 +91,12 @@ void UserInterface::DefineScreen(string id, vector<string> section_ids) {
   screens_.insert({id, section_ids});
 }
 
-void UserInterface::UndefineScreen(string id) {
-  if (screens_.find(id) != screens_.end() && id != active_screen_id_) {
-    screens_.erase(id);
+UISection* UserInterface::AccessSectionById(string id) {
+  return sections_.at(id);
+}
+void UserInterface::SetupUI() {
+  for (auto pair : sections_) {
+    pair.second->Setup();
   }
 }
 }  // namespace breakout

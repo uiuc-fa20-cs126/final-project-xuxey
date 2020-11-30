@@ -73,17 +73,20 @@ void BreakoutApp::SetupHomePageUI() {
           []() {
             delete active_game_mode_;
             active_game_mode_ = new EasyMode();
+            UserInterface::AccessSectionById("world")->Setup();
           },
           "Easy", ci::Color8u(51, 51, 51)));
-  UserInterface::AddUISection(home_sections[2],
-                              new Button(
-                                  Layout::kClassicModeButtonBottomLeft,
-                                  Layout::kClassicModeButtonTopRight,
-                                  []() {
-                                    delete active_game_mode_;
-                                    active_game_mode_ = new ClassicMode();
-                                  },
-                                  "Classic", ci::Color8u(51, 51, 51)));
+  UserInterface::AddUISection(
+      home_sections[2],
+      new Button(
+          Layout::kClassicModeButtonBottomLeft,
+          Layout::kClassicModeButtonTopRight,
+          []() {
+            delete active_game_mode_;
+            active_game_mode_ = new ClassicMode();
+            UserInterface::AccessSectionById("world")->Setup();
+          },
+          "Classic", ci::Color8u(51, 51, 51)));
   UserInterface::AddUISection(
       home_sections[3],
       new TextSection(
