@@ -176,9 +176,9 @@ void World::Setup() {
   double length = top_right_.x - bottom_left_.x;
   double height = bottom_left_.y - top_right_.y;
   // Initialize Bricks
-  bricks_ = BrickGen::GenerateBricks(kNumBrickRows, dvec2(length, height / 5),
-                                     dvec2(0, height / 2),
-                                     BreakoutApp::GetActiveGameMode());
+  bricks_ = WallGen::GenerateWall(kNumBrickRows, dvec2(length, height / 5),
+                                  dvec2(0, height / 2),
+                                  BreakoutApp::GetActiveGameMode());
   // Initialize Plate
   plate_.bottom_left.x = ((length - plate_.length_) / 2);
   plate_.bottom_left.y = height - height / 40;

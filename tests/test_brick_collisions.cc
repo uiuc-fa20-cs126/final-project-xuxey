@@ -7,7 +7,7 @@
 
 using breakout::Ball;
 using breakout::Brick;
-using breakout::BrickGen;
+using breakout::WallGen;
 using breakout::World;
 using glm::dvec2;
 typedef std::vector<breakout::Brick> bricks_vec;

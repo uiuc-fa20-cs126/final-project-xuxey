@@ -4,7 +4,7 @@
 #include <catch2/catch.hpp>
 
 using breakout::Brick;
-using breakout::BrickGen;
+using breakout::WallGen;
 using glm::dvec2;
 typedef std::vector<breakout::Brick> bricks_vec;
 
@@ -14,7 +14,7 @@ TEST_CASE("Brick generator generates correct number of rows") {
     dvec2 top_right(100, 10);
     dvec2 bottom_left(10, 100);
     bricks_vec bricks =
-        BrickGen::GenerateBricks(1, top_right, bottom_left, game_mode);
+        WallGen::GenerateWall(1, top_right, bottom_left, game_mode);
 
     for (Brick brick : bricks) {
       REQUIRE(brick.bottom_left_.y == bottom_left.y);
@@ -25,7 +25,7 @@ TEST_CASE("Brick generator generates correct number of rows") {
     dvec2 top_right(100, 10);
     dvec2 bottom_left(10, 100);
     bricks_vec bricks =
-        BrickGen::GenerateBricks(2, top_right, bottom_left, game_mode);
+        WallGen::GenerateWall(2, top_right, bottom_left, game_mode);
 
     bool top_row_exists = false;
     bool bottom_row_exists = false;
@@ -44,7 +44,7 @@ TEST_CASE("Brick generator generates correct number of rows") {
     dvec2 top_right(100, 0);
     dvec2 bottom_left(0, 100);
     bricks_vec bricks =
-        BrickGen::GenerateBricks(3, top_right, bottom_left, game_mode);
+        WallGen::GenerateWall(3, top_right, bottom_left, game_mode);
 
     bool top_row_exists = false;
     bool bottom_row_exists = false;
@@ -71,7 +71,7 @@ TEST_CASE("All bricks have the correct strength") {
   dvec2 top_right(100, 0);
   dvec2 bottom_left(0, 100);
   bricks_vec bricks =
-      BrickGen::GenerateBricks(3, top_right, bottom_left, game_mode);
+      WallGen::GenerateWall(3, top_right, bottom_left, game_mode);
 
   for (Brick brick : bricks) {
     REQUIRE(brick.strength == 3);
