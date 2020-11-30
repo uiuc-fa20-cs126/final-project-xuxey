@@ -15,13 +15,15 @@ namespace breakout {
  */
 class TextSection : public UISection {
  protected:
-  std::string text_content_;
+  std::function<std::string()> text_function_;
   ci::Font font_;
   ci::Color color_;
 
  public:
   TextSection(const std::string& text_content, dvec2 position, ci::Color color,
               ci::Font font);
+  TextSection(const std::function<std::string()> text_function, dvec2 position,
+              ci::Color color, ci::Font font);
   void Render() const override;
   void Update() override{};
 };

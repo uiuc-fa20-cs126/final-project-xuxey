@@ -24,7 +24,12 @@ struct Layout {
   // Home Screen
   static const dvec2 kStartButtonTopRight;
   static const dvec2 kStartButtonBottomLeft;
-  static const dvec2 kStartTextCenter;
+
+  static const dvec2 kEasyModeButtonTopRight;
+  static const dvec2 kEasyModeButtonBottomLeft;
+
+  static const dvec2 kClassicModeButtonTopRight;
+  static const dvec2 kClassicModeButtonBottomLeft;
 };
 }  // namespace breakout
 

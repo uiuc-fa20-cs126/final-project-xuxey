@@ -1,5 +1,10 @@
 #pragma once
 
+#include <logic/gamemodes/game_mode.h>
+
+#include <string>
+#include <unordered_map>
+
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
@@ -11,12 +16,12 @@ namespace breakout {
  * Cinder App class
  */
 class BreakoutApp : public ci::app::App {
-  // Gas Container holding particle states
-  static World* world_;
   // Add gas container and instructions to the UI
   void SetupGameUI();
   // Add buttons to the UI
   void SetupHomePageUI();
+  // Current game mode
+  static GameMode* active_game_mode_;
 
  public:
   // Constructor
@@ -33,6 +38,10 @@ class BreakoutApp : public ci::app::App {
   void keyDown(ci::app::KeyEvent event) override;
   // Method to set up user interface
   void setup() override;
+  // Getter for active game mode
+  static GameMode* GetActiveGameMode();
+  // Destructor
+  virtual ~BreakoutApp();
 };
 
 }  // namespace breakout

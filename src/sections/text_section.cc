@@ -3,11 +3,18 @@
 namespace breakout {
 
 void breakout::TextSection::Render() const {
-  ci::gl::drawStringCentered(text_content_, bottom_left_, color_, font_);
+  ci::gl::drawStringCentered(text_function_(), bottom_left_, color_, font_);
 }
 TextSection::TextSection(const std::string& text_content, dvec2 position,
                          ci::Color color, ci::Font font)
-    : text_content_(text_content), color_(color), font_(font) {
+    : color_(color), font_(font) {
+  bottom_left_ = position;
+  text_function_ = [text_content]() { return text_content; };
+}
+
+TextSection::TextSection(const std::function<std::string()> text_function,
+                         dvec2 position, ci::Color color, ci::Font font)
+    : color_(color), font_(font), text_function_(text_function) {
   bottom_left_ = position;
 }
 }  // namespace breakout

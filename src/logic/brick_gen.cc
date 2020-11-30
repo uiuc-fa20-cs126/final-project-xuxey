@@ -1,6 +1,7 @@
 #include <cinder/Rand.h>
 #include <logic/brick_gen.h>
-#include <logic/game_mode.h>
+#include <logic/gamemodes/classic_mode.h>
+#include <logic/gamemodes/game_mode.h>
 #include <objects/brick.h>
 
 #include <vector>
@@ -8,7 +9,7 @@
 namespace breakout {
 std::vector<Brick> BrickGen::GenerateBricks(size_t num_rows, dvec2 top_right,
                                             dvec2 bottom_left,
-                                            GameMode& schema) {
+                                            GameMode* schema) {
   std::vector<Brick> bricks;
   double row_length = top_right.x - bottom_left.x;
   double total_height = bottom_left.y - top_right.y;
@@ -32,7 +33,7 @@ std::vector<Brick> BrickGen::GenerateBricks(size_t num_rows, dvec2 top_right,
 std::vector<Brick> BrickGen::GenerateRow(int num_bricks, double brick_height,
                                          double row_length,
                                          dvec2 row_bottom_left,
-                                         size_t row_index, GameMode& schema) {
+                                         size_t row_index, GameMode* schema) {
   std::vector<Brick> bricks;
   float max_stretch = static_cast<float>((row_length / (2 * num_bricks)));
   dvec2 brick_bottom_left = row_bottom_left;
@@ -42,22 +43,16 @@ std::vector<Brick> BrickGen::GenerateRow(int num_bricks, double brick_height,
     dvec2 brick_top_right =
         brick_bottom_left + dvec2(random_length, -brick_height);
     Brick brick(brick_top_right, brick_bottom_left);
-    brick.strength = schema.GetBrickStrength(row_index, brick);
-    brick.color_ = schema.GetBrickColor(brick.strength);
+    brick.strength = schema->GetBrickStrength(row_index, brick);
+    brick.color_ = schema->GetBrickColor(brick.strength);
     bricks.push_back(brick);
     brick_bottom_left += dvec2(random_length + kPadding, 0);
   }
   Brick brick(row_bottom_left + dvec2(row_length, -brick_height),
               brick_bottom_left);
-  brick.strength = schema.GetBrickStrength(row_index, brick);
-  brick.color_ = schema.GetBrickColor(brick.strength);
+  brick.strength = schema->GetBrickStrength(row_index, brick);
+  brick.color_ = schema->GetBrickColor(brick.strength);
   bricks.push_back(brick);
   return bricks;
-}
-const float BrickGen::GetKPadding() {
-  return kPadding;
-}
-const float BrickGen::getKMinBrickLength() {
-  return kAvgBrickLength;
 }
 }  // namespace breakout

@@ -6,7 +6,7 @@
 
 namespace breakout {
 
-ci::Color ClassicMode::GetBrickColor(size_t strength) {
+ci::Color ClassicMode::GetBrickColor(size_t strength) const {
   switch (strength) {
     case 1:
       return ci::Color("white");
@@ -18,7 +18,8 @@ ci::Color ClassicMode::GetBrickColor(size_t strength) {
       return ci::Color("red");
   }
 }
-size_t ClassicMode::GetBrickStrength(size_t row_index, Brick& brick) {
+size_t ClassicMode::GetBrickStrength(size_t row_index,
+                                     const Brick& brick) const {
   switch (row_index) {
     case 0:
     case 1:
@@ -31,5 +32,9 @@ size_t ClassicMode::GetBrickStrength(size_t row_index, Brick& brick) {
     default:
       return 3;
   }
+}
+
+std::string ClassicMode::GetName() const {
+  return "classic";
 }
 }  // namespace breakout

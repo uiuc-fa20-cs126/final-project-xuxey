@@ -1,7 +1,7 @@
 #include <interface/breakout_app.h>
 #include <logic/brick_gen.h>
 #include <logic/gamemodes/classic_mode.h>
-#include <sections/world.h>
+#include <logic/gamemodes/easy_mode.h>
 
 #include <glm/gtc/random.hpp>
 
@@ -91,10 +91,10 @@ const Ball& World::GetBall() const {
 void World::InitializeObjects() {
   double length = top_right_.x - bottom_left_.x;
   double height = bottom_left_.y - top_right_.y;
-  ClassicMode game_mode;
   // Initialize Bricks
   bricks_ = BrickGen::GenerateBricks(kNumBrickRows, dvec2(length, height / 5),
-                                     dvec2(0, height / 2), game_mode);
+                                     dvec2(0, height / 2),
+                                     BreakoutApp::GetActiveGameMode());
   // Initialize Plate
   plate_.bottom_left.x = ((length - plate_.length_) / 2);
   plate_.bottom_left.y = height - height / 40;
@@ -164,7 +164,8 @@ void World::HandleBrickCollisions() {
         bricks_.erase(brick_iterator);
         break;
       }
-      brick.color_ = ClassicMode().GetBrickColor(brick.strength);
+      brick.color_ =
+          BreakoutApp::GetActiveGameMode()->GetBrickColor(brick.strength);
     }
     brick_iterator++;
   }
