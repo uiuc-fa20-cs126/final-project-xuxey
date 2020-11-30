@@ -8,6 +8,7 @@
 #include <logic/gamemodes/game_mode.h>
 
 namespace breakout {
+// Game mode with increasing strength and row index
 class ClassicMode : public GameMode {
  public:
   ci::Color GetBrickColor(size_t strength) const override;

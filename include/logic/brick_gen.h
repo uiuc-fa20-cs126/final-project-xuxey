@@ -10,9 +10,13 @@
 
 #include <vector>
 namespace breakout {
+// Brick Generator class for terrain generation
 class BrickGen {
+  // Padding between the bricks and rows in pixels
   constexpr static float kPadding = 20;
+  // Average brick length in pixels
   constexpr static float kAvgBrickLength = 200;
+  // Generates a row of bricks within the given constraints
   static std::vector<Brick> GenerateRow(int num_bricks, double brick_height,
                                         double row_length,
                                         dvec2 row_bottom_left,
@@ -20,6 +24,7 @@ class BrickGen {
                                         GameMode* schema);
 
  public:
+  // Generates a vector of bricks within the given constraints
   static std::vector<Brick> GenerateBricks(size_t num_rows, dvec2 top_right,
                                            dvec2 bottom_left, GameMode* schema);
 };

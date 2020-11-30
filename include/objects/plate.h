@@ -8,8 +8,11 @@
 #include <glm/fwd.hpp>
 namespace breakout {
 struct Plate {
+  // Bottom left coordinate, origin bottom left relative to world
   glm::dvec2 bottom_left;
+  // Length of the plate
   unsigned int length_ = 300;
+  // Vertical width of the plate
   const unsigned int kWidth = 5;
 };
 }  // namespace breakout

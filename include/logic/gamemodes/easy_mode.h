@@ -7,6 +7,7 @@
 
 #include <logic/gamemodes/game_mode.h>
 namespace breakout {
+// An easy mode with one-hit bricks
 class EasyMode : public GameMode {
  public:
   ci::Color GetBrickColor(size_t strength) const override;
