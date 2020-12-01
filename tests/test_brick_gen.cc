@@ -1,5 +1,6 @@
 #include <logic/brick_gen.h>
 #include <logic/gamemodes/classic_mode.h>
+#include <logic/gamemodes/easy_mode.h>
 
 #include <catch2/catch.hpp>
 
@@ -9,7 +10,7 @@ using glm::dvec2;
 typedef std::vector<breakout::Brick> bricks_vec;
 
 TEST_CASE("Brick generator generates correct number of rows") {
-  breakout::ClassicMode game_mode;
+  breakout::GameMode* game_mode = new breakout::ClassicMode();
   SECTION("Single row") {
     dvec2 top_right(100, 10);
     dvec2 bottom_left(10, 100);
@@ -64,16 +65,18 @@ TEST_CASE("Brick generator generates correct number of rows") {
     REQUIRE(bottom_row_exists);
     REQUIRE(middle_row_exists);
   }
+  delete game_mode;
 }
 
 TEST_CASE("All bricks have the correct strength") {
-  breakout::ClassicMode game_mode;
+  breakout::GameMode* game_mode = new breakout::EasyMode();
   dvec2 top_right(100, 0);
   dvec2 bottom_left(0, 100);
   bricks_vec bricks =
       WallGen::GenerateWall(3, top_right, bottom_left, game_mode);
 
   for (Brick brick : bricks) {
-    REQUIRE(brick.strength == 3);
+    REQUIRE(brick.strength == 1);
   }
+  delete game_mode;
 }

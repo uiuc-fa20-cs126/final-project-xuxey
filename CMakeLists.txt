@@ -73,7 +73,7 @@ list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES}
         src/logic/gamemodes/classic_mode.cc)
 
 # Test files go here
-list(APPEND TEST_FILES tests/test_ball_collisions.cc
+list(APPEND TEST_FILES tests/test_wall_collisions.cc
         tests/test_brick_collisions.cc
         tests/test_brick_gen.cc)
 

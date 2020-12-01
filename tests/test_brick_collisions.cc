@@ -15,11 +15,11 @@ typedef std::vector<breakout::Brick> bricks_vec;
 TEST_CASE("Ball collides with brick wall") {
   std::vector<Brick> bricks;
   bricks.push_back(
-      Brick(dvec2(1200, 650), dvec2(900, 600), 1, ci::Color("white")));
+      Brick(dvec2(1200, 600), dvec2(900, 650), 1, ci::Color("white")));
   SECTION("Ball colliding with top wall of brick") {
     dvec2 position(1000, 680.0);
-    dvec2 velocity(2.0, -0.5);
-    dvec2 expected_velocity(2.0, 0.5);
+    dvec2 velocity(2.0, 0.5);
+    dvec2 expected_velocity(2.0, -0.5);
     dvec2 expected_position = position + expected_velocity;
 
     Ball ball(position, velocity);
