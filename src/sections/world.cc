@@ -14,9 +14,10 @@ void World::Render() const {
   ci::gl::color(ci::Color("white"));
   ci::gl::drawStrokedRect(ci::Rectf(bottom_left_, top_right_), 5);
   // Render Ball
-  ci::gl::color(ci::Color(ball_.GetColor()));
-  ci::gl::drawSolidCircle(GetActualPos(ball_.GetPos()),
-                          static_cast<float>(ball_.GetRadius()));
+  dvec2 radius(ball_.GetRadius(), ball_.GetRadius());
+  ci::Rectf ball_bound(GetActualPos(ball_.GetPos() - radius),
+                       GetActualPos(ball_.GetPos() + radius));
+  ci::gl::draw(ball_texture, ball_bound);
   // Render Bricks
   for (const Brick& brick : bricks_) {
     ci::gl::color(brick.color_);
@@ -185,5 +186,7 @@ void World::Setup() {
   glm::dvec2 midpoint(length / 2, height - (height / 25));
   ball_ = Ball(midpoint,
                dvec2(glm::linearRand(-kBallSpeed, kBallSpeed), -kBallSpeed));
+  ball_texture = ci::gl::Texture2d::create(
+      ci::loadImage(cinder::app::loadAsset("ball.png")));
 }
 }  // namespace breakout
