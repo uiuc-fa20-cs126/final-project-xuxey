@@ -71,4 +71,59 @@ TEST_CASE("Ball collides with brick wall") {
 }
 
 TEST_CASE("Ball collides with brick corner") {
+  std::vector<Brick> bricks;
+  bricks.push_back(
+      Brick(dvec2(1200, 600), dvec2(900, 650), 1, ci::Color("white")));
+  SECTION("Ball colliding with top right corner of brick") {
+    dvec2 position(1230.0, 680.0);
+    dvec2 velocity(-1.0, 1.0);
+    dvec2 expected_velocity = (-1.0) * velocity;
+    dvec2 expected_position = position + expected_velocity;
+
+    Ball ball(position, velocity);
+    World world(dvec2(0, 1200), dvec2(2400, 0), ball, bricks);
+    world.Update();
+
+    REQUIRE(expected_velocity == world.GetBall().GetVelocity());
+    REQUIRE(expected_position == world.GetBall().GetPos());
+  }
+  SECTION("Ball colliding with bottom right corner of brick") {
+    dvec2 position(1230, 570.0);
+    dvec2 velocity(-2.0, -0.5);
+    dvec2 expected_velocity = (-1.0) * velocity;
+    dvec2 expected_position = position + expected_velocity;
+
+    Ball ball(position, velocity);
+    World world(dvec2(0, 1200), dvec2(2400, 0), ball, bricks);
+    world.Update();
+
+    REQUIRE(expected_velocity == world.GetBall().GetVelocity());
+    REQUIRE(expected_position == world.GetBall().GetPos());
+  }
+  SECTION("Ball colliding with bottom left corner of brick") {
+    dvec2 position(870, 570.0);
+    dvec2 velocity(1.0, -2.0);
+    dvec2 expected_velocity = (-1.0) * velocity;
+    dvec2 expected_position = position + expected_velocity;
+
+    Ball ball(position, velocity);
+    World world(dvec2(0, 1200), dvec2(2400, 0), ball, bricks);
+    world.Update();
+
+    REQUIRE(expected_velocity == world.GetBall().GetVelocity());
+    REQUIRE(expected_position == world.GetBall().GetPos());
+  }
+  SECTION("Ball colliding with top left corner of brick") {
+    dvec2 position(870, 680.0);
+    dvec2 velocity(2.0, 0.5);
+    dvec2 expected_velocity = (-1.0) * velocity;
+    dvec2 expected_position = position + expected_velocity;
+
+    Ball ball(position, velocity);
+    World world(dvec2(0, 1200), dvec2(2400, 0), ball, bricks);
+    world.Update();
+
+    REQUIRE(expected_velocity == world.GetBall().GetVelocity());
+    REQUIRE(expected_position == world.GetBall().GetPos());
+  }
 }
