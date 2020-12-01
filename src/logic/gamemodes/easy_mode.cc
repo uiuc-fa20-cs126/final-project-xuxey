@@ -6,9 +6,11 @@
 namespace breakout {
 
 ci::Color EasyMode::GetBrickColor(size_t strength) const {
-  std::vector<ci::Color> colors = {ci::Color("white"), ci::Color("orange"),
-                                   ci::Color("red"), ci::Color("green"),
-                                   ci::Color("darkcyan")};
+  std::vector<ci::Color> colors = {
+      ci::Color("white"),     ci::Color("blueviolet"),
+      ci::Color("lightgrey"), ci::Color("lightskyblue"),
+      ci::Color("limegreen"), ci::Color("yellow"),
+      ci::Color("orange"),    ci::Color("red")};
   int randomIndex = glm::linearRand(static_cast<size_t>(0), colors.size() - 1);
   return colors[randomIndex];
 }

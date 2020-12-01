@@ -22,6 +22,8 @@ class BreakoutApp : public ci::app::App {
   void SetupHomePageUI();
   // Current game mode
   static GameMode* active_game_mode_;
+  // Background image
+  ci::gl::Texture2dRef background_;
 
  public:
   // Constructor

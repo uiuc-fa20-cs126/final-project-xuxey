@@ -11,8 +11,8 @@ using glm::dvec2;
 
 void World::Render() const {
   // Render Background
-  ci::gl::color(ci::Color("black"));
-  ci::gl::drawSolidRect(ci::Rectf(bottom_left_, top_right_));
+  ci::gl::color(ci::Color("white"));
+  ci::gl::drawStrokedRect(ci::Rectf(bottom_left_, top_right_), 5);
   // Render Ball
   ci::gl::color(ci::Color(ball_.GetColor()));
   ci::gl::drawSolidCircle(GetActualPos(ball_.GetPos()),
@@ -43,14 +43,12 @@ void World::Update() {
 World::World(const dvec2& bottom_left, const dvec2& top_right) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
-  Setup();
 }
 
 World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball,
              std::vector<Brick> bricks) {
   bottom_left_ = bottom_left;
   top_right_ = top_right;
-  Setup();
   ball_ = ball;
   bricks_ = bricks;
 }
@@ -58,16 +56,16 @@ World::World(const dvec2& bottom_left, const dvec2& top_right, Ball ball,
 void World::HandleWallCollision() {
   double x_position = ball_.GetNextPosition().x;
   double y_position = ball_.GetNextPosition().y;
-  // top wall
-  if (y_position <= ball_.GetRadius()) {
-    if (ball_.GetVelocity().y < 0) {
-      ball_.InvertYVelocity();
-    }
-  }
   // bottom wall
   if (y_position >= bottom_left_.y - top_right_.y - ball_.GetRadius()) {
     if (ball_.GetVelocity().y > 0) {
       HandleGameEnd();
+    }
+  }
+  // top wall
+  if (y_position <= ball_.GetRadius()) {
+    if (ball_.GetVelocity().y < 0) {
+      ball_.InvertYVelocity();
     }
   }
   // right wall
@@ -172,6 +170,7 @@ void World::HandleGameEnd() {
   Setup();
   UserInterface::active_screen_id_ = "home_screen";
 }
+
 void World::Setup() {
   double length = top_right_.x - bottom_left_.x;
   double height = bottom_left_.y - top_right_.y;

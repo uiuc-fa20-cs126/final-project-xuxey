@@ -21,6 +21,9 @@ void BreakoutApp::setup() {
   SetupGameUI();
   SetupHomePageUI();
   UserInterface::active_screen_id_ = "home_screen";
+  background_ =
+      ci::gl::Texture2d::create(ci::loadImage(loadAsset("background.jpg")));
+  UserInterface::SetupUI();
 }
 
 void BreakoutApp::update() {
@@ -28,8 +31,7 @@ void BreakoutApp::update() {
 }
 
 void BreakoutApp::draw() {
-  // Gray background
-  ci::gl::clear(ci::Color8u(51, 51, 51));
+  ci::gl::draw(background_, getWindowBounds());
   UserInterface::RenderUI();
 }
 
@@ -65,7 +67,7 @@ void BreakoutApp::SetupHomePageUI() {
       new Button(
           Layout::kStartButtonBottomLeft, Layout::kStartButtonTopRight,
           []() { UserInterface::active_screen_id_ = "game_screen"; }, "Start",
-          ci::Color8u(51, 51, 51)));
+          ci::ColorA(0, 0, 0, 0)));
   UserInterface::AddUISection(
       home_sections[1],
       new Button(
@@ -75,7 +77,7 @@ void BreakoutApp::SetupHomePageUI() {
             active_game_mode_ = new EasyMode();
             UserInterface::AccessSectionById("world")->Setup();
           },
-          "Easy", ci::Color8u(51, 51, 51)));
+          "Easy", ci::ColorA(0, 0, 0, 0)));
   UserInterface::AddUISection(
       home_sections[2],
       new Button(
@@ -86,7 +88,7 @@ void BreakoutApp::SetupHomePageUI() {
             active_game_mode_ = new ClassicMode();
             UserInterface::AccessSectionById("world")->Setup();
           },
-          "Classic", ci::Color8u(51, 51, 51)));
+          "Classic", ci::ColorA(0, 0, 0, 0)));
   UserInterface::AddUISection(
       home_sections[3],
       new TextSection(
