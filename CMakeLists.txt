@@ -70,12 +70,14 @@ list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES}
         src/logic/brick_gen.cc
         src/interface/layout.cc
         src/logic/gamemodes/easy_mode.cc
-        src/logic/gamemodes/classic_mode.cc)
+        src/logic/gamemodes/classic_mode.cc
+        src/logic/score_board.cc)
 
 # Test files go here
-list(APPEND TEST_FILES tests/test_wall_collisions.cc
+list(APPEND TEST_FILES
         tests/test_brick_collisions.cc
-        tests/test_brick_gen.cc)
+        tests/test_brick_gen.cc
+        tests/test_wall_collisions.cc)
 
 set(CompilerFlags
         CMAKE_CXX_FLAGS
