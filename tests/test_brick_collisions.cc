@@ -70,7 +70,7 @@ TEST_CASE("Ball collides with brick wall") {
   }
 }
 
-TEST_CASE("Ball collides with brick corner") {
+TEST_CASE("Ball collides with brick corner", "[brick_corner]") {
   std::vector<Brick> bricks;
   bricks.push_back(
       Brick(dvec2(1200, 600), dvec2(900, 650), 1, ci::Color("white")));

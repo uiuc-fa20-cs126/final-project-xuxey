@@ -7,7 +7,7 @@ using breakout::Ball;
 using breakout::World;
 using glm::dvec2;
 
-TEST_CASE("Ball collides with walls", "[walls]") {
+TEST_CASE("Ball collides with walls") {
   std::vector<breakout::Brick> empty_bricks;
   SECTION("Ball collides with top wall") {
     dvec2 position(500.0, 30.0);
