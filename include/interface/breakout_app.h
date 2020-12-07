@@ -47,6 +47,7 @@ class BreakoutApp : public ci::app::App {
   void setup() override;
   // Getter for active game mode
   static GameMode* GetActiveGameMode();
+  // Font Getters
   static const ci::Font& GetPrimaryFont();
   static const ci::Font& GetSecondaryFont();
   // Destructor

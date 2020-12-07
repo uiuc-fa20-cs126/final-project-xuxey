@@ -61,11 +61,20 @@ void BreakoutApp::keyDown(ci::app::KeyEvent event) {
 }
 
 void BreakoutApp::SetupGameUI() {
-  UserInterface::AddUISection(
-      "world", new World(Layout::kWorldBottomLeft, Layout::kWorldTopRight));
-  // Register screen on user interface
   std::vector<std::string> game_sections;
   game_sections.push_back("world");
+  game_sections.push_back("score");
+  UserInterface::AddUISection(
+      game_sections[0],
+      new World(Layout::kWorldBottomLeft, Layout::kWorldTopRight));
+  UserInterface::AddUISection(
+      game_sections[1],
+      new TextSection(
+          []() {
+            return "Score: " + std::to_string(ScoreBoard::GetLatestScore());
+          },
+          dvec2(1200, 100), ci::Color("aqua"), secondary_font_));
+  // Register screen on user interface
   UserInterface::DefineScreen("game_screen", game_sections);
 }
 

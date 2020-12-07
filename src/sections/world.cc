@@ -112,6 +112,7 @@ void World::OnKeyPress(ci::app::KeyEvent event) {
 void World::HandleBrickCollisions() {
   dvec2 ball_pos = GetActualPos(ball_.GetPos());
   auto brick_iterator = bricks_.begin();
+  double world_length = top_right_.x - bottom_left_.x;
   for (Brick& brick : bricks_) {
     bool flipX = false;
     bool flipY = false;
@@ -145,6 +146,10 @@ void World::HandleBrickCollisions() {
       }
       --brick.strength;
       if (brick.strength == 0) {
+        score_ += static_cast<int>(
+            (world_length - (brick.top_right_.x - brick.bottom_left_.x)) / 100);
+        ScoreBoard::RegisterScore(BreakoutApp::GetActiveGameMode()->GetName(),
+                                  score_);
         bricks_.erase(brick_iterator);
         break;
       }
