@@ -173,7 +173,7 @@ void World::HandleGameEnd() {
   ScoreBoard::RegisterScore(BreakoutApp::GetActiveGameMode()->GetName(),
                             score_);
   score_ = 0;
-  UserInterface::active_screen_id_ = "home_screen";
+  UserInterface::active_screen_id_ = "game_end_screen";
 }
 
 void World::Setup() {

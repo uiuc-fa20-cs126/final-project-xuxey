@@ -16,10 +16,12 @@ namespace breakout {
  * Cinder App class
  */
 class BreakoutApp : public ci::app::App {
-  // Add gas container and instructions to the UI
+  // Set up world and associated sections
   void SetupGameUI();
-  // Add buttons to the UI
+  // Set up homepage sections
   void SetupHomePageUI();
+  // Set up game over screen
+  void SetupGameEndUI();
   // Current game mode
   static GameMode* active_game_mode_;
   // Background image

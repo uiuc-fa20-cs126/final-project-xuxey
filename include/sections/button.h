@@ -13,7 +13,6 @@ namespace breakout {
 class Button : public UISection {
   std::function<void(void)> on_click_;
   std::string label_;
-  ci::Color background_color_;
 
  public:
   /**
@@ -24,8 +23,6 @@ class Button : public UISection {
    */
   Button(dvec2 bottom_left, dvec2 top_right, std::function<void(void)> on_click,
          std::string label);
-  Button(dvec2 bottom_left, dvec2 top_right, std::function<void(void)> on_click,
-         std::string label, cinder::Color color);
   void Render() const override;
   void OnClick(glm::dvec2 relative_pos) override;
   void Update() override{};

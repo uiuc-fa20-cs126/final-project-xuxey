@@ -2,6 +2,7 @@
 #include <interface/layout.h>
 #include <logic/gamemodes/classic_mode.h>
 #include <logic/gamemodes/easy_mode.h>
+#include <logic/score_board.h>
 #include <sections/button.h>
 #include <sections/text_section.h>
 
@@ -20,6 +21,7 @@ BreakoutApp::BreakoutApp() {
 void BreakoutApp::setup() {
   SetupGameUI();
   SetupHomePageUI();
+  SetupGameEndUI();
   UserInterface::active_screen_id_ = "home_screen";
   background_ =
       ci::gl::Texture2d::create(ci::loadImage(loadAsset("background.jpg")));
@@ -66,8 +68,7 @@ void BreakoutApp::SetupHomePageUI() {
       home_sections[0],
       new Button(
           Layout::kStartButtonBottomLeft, Layout::kStartButtonTopRight,
-          []() { UserInterface::active_screen_id_ = "game_screen"; }, "Start",
-          ci::ColorA(0, 0, 0, 0)));
+          []() { UserInterface::active_screen_id_ = "game_screen"; }, "Start"));
   UserInterface::AddUISection(
       home_sections[1],
       new Button(
@@ -77,7 +78,7 @@ void BreakoutApp::SetupHomePageUI() {
             active_game_mode_ = new EasyMode();
             UserInterface::AccessSectionById("world")->Setup();
           },
-          "Easy", ci::ColorA(0, 0, 0, 0)));
+          "Easy"));
   UserInterface::AddUISection(
       home_sections[2],
       new Button(
@@ -88,7 +89,7 @@ void BreakoutApp::SetupHomePageUI() {
             active_game_mode_ = new ClassicMode();
             UserInterface::AccessSectionById("world")->Setup();
           },
-          "Classic", ci::ColorA(0, 0, 0, 0)));
+          "Classic"));
   UserInterface::AddUISection(
       home_sections[3],
       new TextSection(
@@ -104,5 +105,28 @@ GameMode* BreakoutApp::GetActiveGameMode() {
 
 BreakoutApp::~BreakoutApp() {
   delete active_game_mode_;
+}
+void BreakoutApp::SetupGameEndUI() {
+  std::vector<std::string> game_end_sections;
+  game_end_sections.push_back("score_text");
+  game_end_sections.push_back("home_button");
+  UserInterface::AddUISection(
+      game_end_sections[0],
+      new TextSection(
+          []() {
+            return "Game Over. Score: " +
+                   std::to_string(ScoreBoard::GetLatestScore());
+          },
+          dvec2(1200, 400), ci::Color("aqua"), ci::Font("arial", 45)));
+  // todo add text to Layout
+  UserInterface::AddUISection(
+      game_end_sections[1],
+      new Button(
+          Layout::kEasyModeButtonBottomLeft, Layout::kEasyModeButtonTopRight,
+          []() { UserInterface::active_screen_id_ = "home_screen"; },
+          "Go Home"));
+  // todo change layout ^
+  // Register screen on user interface
+  UserInterface::DefineScreen("game_end_screen", game_end_sections);
 }
 }  // namespace breakout
