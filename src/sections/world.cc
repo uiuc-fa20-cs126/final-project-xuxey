@@ -174,10 +174,9 @@ void World::HandlePlateCollision() {
 }
 
 void World::HandleGameEnd() {
-  Setup();
   ScoreBoard::RegisterScore(BreakoutApp::GetActiveGameMode()->GetName(),
                             score_);
-  score_ = 0;
+  Setup();
   UserInterface::active_screen_id_ = "game_end_screen";
 }
 
@@ -197,5 +196,6 @@ void World::Setup() {
                dvec2(glm::linearRand(-kBallSpeed, kBallSpeed), -kBallSpeed));
   ball_texture = ci::gl::Texture2d::create(
       ci::loadImage(cinder::app::loadAsset("ball.png")));
+  score_ = 0;
 }
 }  // namespace breakout

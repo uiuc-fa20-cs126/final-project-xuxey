@@ -71,9 +71,10 @@ void BreakoutApp::SetupGameUI() {
       game_sections[1],
       new TextSection(
           []() {
-            return "Score: " + std::to_string(ScoreBoard::GetLatestScore());
+            int score = ScoreBoard::GetLatestScore();
+            return (score > 0) ? "Score: " + std::to_string(score) : "";
           },
-          dvec2(1200, 100), ci::Color("aqua"), secondary_font_));
+          dvec2(1200, 100), ci::Color("white"), secondary_font_));
   // Register screen on user interface
   UserInterface::DefineScreen("game_screen", game_sections);
 }
@@ -114,7 +115,7 @@ void BreakoutApp::SetupHomePageUI() {
       home_sections[3],
       new TextSection(
           []() { return "Selected: " + active_game_mode_->GetName(); },
-          dvec2(1200, 400), ci::Color("aqua"), secondary_font_));
+          dvec2(1200, 300), ci::Color("aqua"), secondary_font_));
   // todo add text to Layout
   // Register home screen on user interface
   UserInterface::DefineScreen("home_screen", home_sections);
@@ -128,22 +129,30 @@ BreakoutApp::~BreakoutApp() {
 }
 void BreakoutApp::SetupGameEndUI() {
   std::vector<std::string> game_end_sections;
+  game_end_sections.push_back("game_over_text");
   game_end_sections.push_back("score_text");
   game_end_sections.push_back("home_button");
   UserInterface::AddUISection(
-      game_end_sections[0],
-      new TextSection(
-          []() {
-            return "Game Over. Score: " +
-                   std::to_string(ScoreBoard::GetLatestScore());
-          },
-          dvec2(1200, 400), ci::Color("aqua"), primary_font_));
-  // todo add text to Layout
+      game_end_sections[0], new TextSection("Game Over", dvec2(1200, 400),
+                                            ci::Color("white"), primary_font_));
   UserInterface::AddUISection(
       game_end_sections[1],
+      new TextSection(
+          []() {
+            return "Score: " + std::to_string(ScoreBoard::GetLatestScore());
+          },
+          dvec2(1200, 500), ci::Color("aqua"), secondary_font_));
+  // todo add text to Layout
+  UserInterface::AddUISection(
+      game_end_sections[2],
       new Button(
           Layout::kEasyModeButtonBottomLeft, Layout::kClassicModeButtonTopRight,
-          []() { UserInterface::active_screen_id_ = "home_screen"; },
+          []() {
+            UserInterface::active_screen_id_ = "home_screen";
+            // Reset scoreboard
+            ScoreBoard::RegisterScore(
+                BreakoutApp::GetActiveGameMode()->GetName(), 0);
+          },
           "Go Home"));
   // todo change layout ^
   // Register screen on user interface
