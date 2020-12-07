@@ -29,7 +29,6 @@ class BreakoutApp : public ci::app::App {
   // Game Fonts
   static ci::Font primary_font_;
   static ci::Font secondary_font_;
-
  public:
   // Constructor
   explicit BreakoutApp();
@@ -39,8 +38,6 @@ class BreakoutApp : public ci::app::App {
   void update() override;
   // Method to handle the mouse click event
   void mouseDown(ci::app::MouseEvent event) override;
-  // Method to handle mouse drag event
-  void mouseDrag(ci::app::MouseEvent event) override;
   // Method to handle the key press event
   void keyDown(ci::app::KeyEvent event) override;
   // Method to set up user interface

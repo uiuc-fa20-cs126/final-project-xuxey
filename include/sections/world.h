@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include "cinder/audio/Voice.h"
 #include "cinder/gl/gl.h"
 #include "interface/ui_section.h"
 #include "objects/brick.h"
@@ -26,6 +27,7 @@ class World : public UISection {
   // Speed of the ball in pixels/frame
   const double kBallSpeed = 5.0;
   bool is_playing_ = true;
+  static ci::audio::VoiceRef bounce_sound;
   // Helper methods
   void HandleWallCollision();
   void HandleBrickCollisions();

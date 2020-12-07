@@ -10,6 +10,8 @@ namespace breakout {
 
 using glm::dvec2;
 
+ci::audio::VoiceRef World::bounce_sound;
+
 void World::Render() const {
   // Render Background
   ci::gl::color(ci::Color("white"));
@@ -146,6 +148,7 @@ void World::HandleBrickCollisions() {
       }
       --brick.strength;
       if (brick.strength == 0) {
+        bounce_sound->start();
         score_ += static_cast<int>(
             (world_length - (brick.top_right_.x - brick.bottom_left_.x)) / 100);
         ScoreBoard::RegisterScore(BreakoutApp::GetActiveGameMode()->GetName(),
@@ -170,6 +173,7 @@ void World::HandlePlateCollision() {
     double x_direction =
         (ball_.GetPos().x - plate_center_x) / (plate_.length_ / 2);
     ball_.SetVelocity(dvec2(x_direction * kBallSpeed, -ball_.GetVelocity().y));
+    bounce_sound->start();
   }
 }
 
@@ -196,6 +200,11 @@ void World::Setup() {
                dvec2(glm::linearRand(-kBallSpeed, kBallSpeed), -kBallSpeed));
   ball_texture = ci::gl::Texture2d::create(
       ci::loadImage(cinder::app::loadAsset("ball.png")));
+  // Reset Score
   score_ = 0;
+  // Sound
+  ci::audio::SourceFileRef sourceFile =
+      ci::audio::load(ci::app::loadAsset("clack.ogg"));
+  bounce_sound = ci::audio::Voice::create(sourceFile);
 }
 }  // namespace breakout

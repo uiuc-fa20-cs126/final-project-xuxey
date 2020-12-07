@@ -48,10 +48,6 @@ void BreakoutApp::draw() {
   UserInterface::RenderUI();
 }
 
-void BreakoutApp::mouseDrag(ci::app::MouseEvent event) {
-  mouseDown(event);
-}
-
 void BreakoutApp::mouseDown(ci::app::MouseEvent event) {
   UserInterface::HandleMouseClick(event.getPos());
 }
@@ -153,7 +149,7 @@ void BreakoutApp::SetupGameEndUI() {
             ScoreBoard::RegisterScore(
                 BreakoutApp::GetActiveGameMode()->GetName(), 0);
           },
-          "Go Home"));
+          "Back"));
   // todo change layout ^
   // Register screen on user interface
   UserInterface::DefineScreen("game_end_screen", game_end_sections);
