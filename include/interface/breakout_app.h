@@ -49,6 +49,8 @@ class BreakoutApp : public ci::app::App {
   static const ci::Font& GetSecondaryFont();
   // Destructor
   virtual ~BreakoutApp();
+  void SetupScoreboard();
+  void SaveScoreboard();
 };
 
 }  // namespace breakout

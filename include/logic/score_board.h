@@ -14,9 +14,8 @@ class ScoreBoard {
   static int latest_score_;
 
  public:
-  static std::ostream& ExportScores(std::ostream& os, const ScoreBoard& board);
-  static std::istream& InitializeScores(std::istream& os,
-                                        const ScoreBoard& board);
+  static std::ostream& ExportScores(std::ostream& os);
+  static std::istream& InitializeScores(std::istream& os);
   static int GetLatestScore();
   static void RegisterScore(std::string game_mode_id, int score);
 };

@@ -5,19 +5,17 @@
 
 namespace breakout {
 std::unordered_map<std::string, int> ScoreBoard::scores_;
-int ScoreBoard::latest_score_ = -1;
+int ScoreBoard::latest_score_ = 0;
 
-std::ostream& ScoreBoard::ExportScores(std::ostream& os,
-                                       const ScoreBoard& board) {
-  scores_.clear();
+std::ostream& ScoreBoard::ExportScores(std::ostream& os) {
   for (auto pair : ScoreBoard::scores_) {
     os << pair.first << std::endl << std::to_string(pair.second) << std::endl;
   }
   return os;
 }
 
-std::istream& ScoreBoard::InitializeScores(std::istream& is,
-                                           const ScoreBoard& board) {
+std::istream& ScoreBoard::InitializeScores(std::istream& is) {
+  scores_.clear();
   std::string line, key;
   unsigned int line_index = 0;
   while (std::getline(is, line)) {

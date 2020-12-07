@@ -33,6 +33,7 @@ void BreakoutApp::setup() {
   SetupGameUI();
   SetupHomePageUI();
   SetupGameEndUI();
+  SetupScoreboard();
   UserInterface::active_screen_id_ = "home_screen";
   background_ =
       ci::gl::Texture2d::create(ci::loadImage(loadAsset("background.jpg")));
@@ -143,11 +144,12 @@ void BreakoutApp::SetupGameEndUI() {
       game_end_sections[2],
       new Button(
           Layout::kEasyModeButtonBottomLeft, Layout::kClassicModeButtonTopRight,
-          []() {
+          [this]() {
             UserInterface::active_screen_id_ = "home_screen";
             // Reset scoreboard
             ScoreBoard::RegisterScore(
                 BreakoutApp::GetActiveGameMode()->GetName(), 0);
+            SaveScoreboard();
           },
           "Back"));
   // todo change layout ^
@@ -162,4 +164,24 @@ const ci::Font& BreakoutApp::GetPrimaryFont() {
 const ci::Font& BreakoutApp::GetSecondaryFont() {
   return secondary_font_;
 }
+
+void BreakoutApp::SetupScoreboard() {
+  std::ifstream file_stream;
+  std::string filename = "scores.txt";
+  file_stream.open(filename);
+  if (!file_stream) {
+    std::ofstream output_file;
+    output_file.open(filename);
+  }
+  ScoreBoard::InitializeScores(file_stream);
+}
+
+void BreakoutApp::SaveScoreboard() {
+  std::ofstream output_file;
+  // todo class member
+  output_file.open("scores.txt");
+  ScoreBoard::ExportScores(output_file);
+  output_file.close();
+}
+
 }  // namespace breakout
