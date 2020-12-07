@@ -2,6 +2,7 @@
 #include <logic/brick_gen.h>
 #include <logic/gamemodes/classic_mode.h>
 #include <logic/gamemodes/easy_mode.h>
+#include <logic/score_board.h>
 
 #include <glm/gtc/random.hpp>
 
@@ -169,6 +170,9 @@ void World::HandlePlateCollision() {
 
 void World::HandleGameEnd() {
   Setup();
+  ScoreBoard::RegisterScore(BreakoutApp::GetActiveGameMode()->GetName(),
+                            score_);
+  score_ = 0;
   UserInterface::active_screen_id_ = "home_screen";
 }
 

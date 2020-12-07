@@ -18,6 +18,7 @@ class World : public UISection {
   std::vector<Brick> bricks_;
   Plate plate_;
   cinder::gl::Texture2dRef ball_texture;
+  int score_ = 0;
   // Speed of the plate in pixels/frame
   const double kPlateSpeed = 18.0;
   // Number of rows of bricks

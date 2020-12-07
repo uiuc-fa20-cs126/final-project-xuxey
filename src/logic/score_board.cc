@@ -5,15 +5,19 @@
 
 namespace breakout {
 std::unordered_map<std::string, int> ScoreBoard::scores_;
+int ScoreBoard::latest_score_ = -1;
 
-std::ostream& operator<<(std::ostream& os, const ScoreBoard& board) {
+std::ostream& ScoreBoard::ExportScores(std::ostream& os,
+                                       const ScoreBoard& board) {
+  scores_.clear();
   for (auto pair : ScoreBoard::scores_) {
     os << pair.first << std::endl << std::to_string(pair.second) << std::endl;
   }
   return os;
 }
 
-std::istream& operator>>(std::istream& is, const ScoreBoard& board) {
+std::istream& ScoreBoard::InitializeScores(std::istream& is,
+                                           const ScoreBoard& board) {
   std::string line, key;
   unsigned int line_index = 0;
   while (std::getline(is, line)) {
@@ -29,4 +33,18 @@ std::istream& operator>>(std::istream& is, const ScoreBoard& board) {
   }
   return is;
 }
+
+void ScoreBoard::RegisterScore(std::string game_mode_id, int score) {
+  if (scores_.find(game_mode_id) == scores_.end()) {
+    ScoreBoard::scores_.insert({game_mode_id, score});
+  } else if (scores_.at(game_mode_id) < score) {
+    ScoreBoard::scores_.insert({game_mode_id, score});
+  }
+  latest_score_ = score;
+}
+
+int ScoreBoard::GetLatestScore() {
+  return latest_score_;
+}
+
 }  // namespace breakout
