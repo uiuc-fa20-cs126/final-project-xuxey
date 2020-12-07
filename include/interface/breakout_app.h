@@ -26,6 +26,9 @@ class BreakoutApp : public ci::app::App {
   static GameMode* active_game_mode_;
   // Background image
   ci::gl::Texture2dRef background_;
+  // Game Fonts
+  static ci::Font primary_font_;
+  static ci::Font secondary_font_;
 
  public:
   // Constructor
@@ -44,6 +47,8 @@ class BreakoutApp : public ci::app::App {
   void setup() override;
   // Getter for active game mode
   static GameMode* GetActiveGameMode();
+  static const ci::Font& GetPrimaryFont();
+  static const ci::Font& GetSecondaryFont();
   // Destructor
   virtual ~BreakoutApp();
 };

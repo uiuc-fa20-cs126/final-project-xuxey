@@ -6,16 +6,27 @@
 #include <sections/button.h>
 #include <sections/text_section.h>
 
+#include <filesystem>
+
+namespace fs = std::experimental::filesystem;
 using glm::dvec2;
 
 namespace breakout {
 
 GameMode* BreakoutApp::active_game_mode_;
+ci::Font BreakoutApp::primary_font_;
+ci::Font BreakoutApp::secondary_font_;
 
 BreakoutApp::BreakoutApp() {
   ci::app::setWindowSize(static_cast<int>(2 * Layout::kWindowHeight),
                          static_cast<int>(Layout::kWindowHeight));
   active_game_mode_ = new EasyMode();
+  primary_font_ = ci::Font(ci::DataSourcePath::create(fs::path(
+                               ci::app::getAssetPath("Goldman-Bold.ttf"))),
+                           45);
+  secondary_font_ = ci::Font(ci::DataSourcePath::create(fs::path(
+                                 ci::app::getAssetPath("Kanit-Regular.ttf"))),
+                             35);
 }
 
 void BreakoutApp::setup() {
@@ -94,7 +105,7 @@ void BreakoutApp::SetupHomePageUI() {
       home_sections[3],
       new TextSection(
           []() { return "Selected: " + active_game_mode_->GetName(); },
-          dvec2(1200, 400), ci::Color("aqua"), ci::Font("arial", 45)));
+          dvec2(1200, 400), ci::Color("aqua"), secondary_font_));
   // todo add text to Layout
   // Register home screen on user interface
   UserInterface::DefineScreen("home_screen", home_sections);
@@ -117,16 +128,24 @@ void BreakoutApp::SetupGameEndUI() {
             return "Game Over. Score: " +
                    std::to_string(ScoreBoard::GetLatestScore());
           },
-          dvec2(1200, 400), ci::Color("aqua"), ci::Font("arial", 45)));
+          dvec2(1200, 400), ci::Color("aqua"), primary_font_));
   // todo add text to Layout
   UserInterface::AddUISection(
       game_end_sections[1],
       new Button(
-          Layout::kEasyModeButtonBottomLeft, Layout::kEasyModeButtonTopRight,
+          Layout::kEasyModeButtonBottomLeft, Layout::kClassicModeButtonTopRight,
           []() { UserInterface::active_screen_id_ = "home_screen"; },
           "Go Home"));
   // todo change layout ^
   // Register screen on user interface
   UserInterface::DefineScreen("game_end_screen", game_end_sections);
+}
+
+const ci::Font& BreakoutApp::GetPrimaryFont() {
+  return primary_font_;
+}
+
+const ci::Font& BreakoutApp::GetSecondaryFont() {
+  return secondary_font_;
 }
 }  // namespace breakout
