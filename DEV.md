@@ -19,6 +19,12 @@
   Will be using a handmade substitute for ball light reflection.
 - Decided to drop the customizable colors because the game has pre-defined color dependencies, and can focus the effort on some stretch goals.
 
+# Week 3
+- Added a functioning live score board in the game
+- Added functionality to save high scores to a file for conserving scores across sessions
+- Added sound effect on ball collisions with world objects
+- Improved UI Experience with an end-game screen
+
 ## Planned Features
 
 - Add screens to User Interface for UI Modularity (Accomplished) 
