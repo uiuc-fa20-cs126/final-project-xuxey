@@ -35,6 +35,7 @@ class World : public UISection {
   void HandleBrickCollisions();
   void HandlePlateCollision();
   void HandleGameEnd();
+  void PlaySound();
 
  public:
   World(const dvec2& bottom_left, const dvec2& top_right);

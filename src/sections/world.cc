@@ -70,18 +70,21 @@ void World::HandleWallCollision() {
   if (y_position <= ball_.GetRadius()) {
     if (ball_.GetVelocity().y < 0) {
       ball_.InvertYVelocity();
+      PlaySound();
     }
   }
   // right wall
   if (x_position >= top_right_.x - bottom_left_.x - ball_.GetRadius()) {
     if (ball_.GetVelocity().x > 0) {
       ball_.InvertXVelocity();
+      PlaySound();
     }
   }
   // left wall
   if (x_position <= ball_.GetRadius()) {
     if (ball_.GetVelocity().x < 0) {
       ball_.InvertXVelocity();
+      PlaySound();
     }
   }
 }
@@ -95,13 +98,14 @@ void World::OnKeyPress(ci::app::KeyEvent event) {
   switch (event.getCode()) {
     case ci::app::KeyEvent::KEY_LEFT:
     case ci::app::KeyEvent::KEY_a:
-      if (plate_pos.x - kPlateSpeed > bottom_left_.x) {
+      if (plate_pos.x - kPlateSpeed > bottom_left_.x && is_playing_) {
         plate_.bottom_left.x -= kPlateSpeed;
       }
       break;
     case ci::app::KeyEvent::KEY_RIGHT:
     case ci::app::KeyEvent::KEY_d:
-      if (plate_pos.x + plate_.length_ + kPlateSpeed < top_right_.x) {
+      if (plate_pos.x + plate_.length_ + kPlateSpeed < top_right_.x &&
+          is_playing_) {
         plate_.bottom_left.x += kPlateSpeed;
       }
       break;
@@ -147,8 +151,8 @@ void World::HandleBrickCollisions() {
         ball_.InvertYVelocity();
       }
       --brick.strength;
+      PlaySound();
       if (brick.strength == 0) {
-        bounce_sound->start();
         score_ += static_cast<int>(
             (world_length - (brick.top_right_.x - brick.bottom_left_.x)) / 100);
         ScoreBoard::RegisterScore(BreakoutApp::GetActiveGameMode()->GetName(),
@@ -188,6 +192,11 @@ void World::HandleGameEnd() {
                             score_);
   Setup();
   UserInterface::active_screen_id_ = "game_end_screen";
+}
+
+void World::PlaySound() {
+  bounce_sound->stop();
+  bounce_sound->start();
 }
 
 void World::Setup() {
