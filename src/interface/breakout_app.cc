@@ -2,6 +2,7 @@
 #include <interface/layout.h>
 #include <logic/gamemodes/classic_mode.h>
 #include <logic/gamemodes/easy_mode.h>
+#include <logic/gamemodes/hard_mode.h>
 #include <logic/score_board.h>
 #include <sections/button.h>
 #include <sections/score_view.h>
@@ -85,6 +86,7 @@ void BreakoutApp::SetupHomePageUI() {
   home_sections.push_back("active_section_text");
   home_sections.push_back("high_scores");
   home_sections.push_back("instructions");
+  home_sections.push_back("hard_mode_button");
   UserInterface::AddUISection(
       home_sections[0],
       new Button(
@@ -100,6 +102,16 @@ void BreakoutApp::SetupHomePageUI() {
             UserInterface::AccessSectionById("world")->Setup();
           },
           "Easy"));
+  UserInterface::AddUISection(
+      home_sections[6],
+      new Button(
+          Layout::kMiddleButtonBottomLeft, Layout::kMiddleButtonTopRight,
+          []() {
+            delete active_game_mode_;
+            active_game_mode_ = new HardMode();
+            UserInterface::AccessSectionById("world")->Setup();
+          },
+          "Hard"));
   UserInterface::AddUISection(
       home_sections[2],
       new Button(
