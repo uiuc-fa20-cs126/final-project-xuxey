@@ -25,11 +25,23 @@ struct Layout {
   static const dvec2 kStartButtonTopRight;
   static const dvec2 kStartButtonBottomLeft;
 
-  static const dvec2 kEasyModeButtonTopRight;
-  static const dvec2 kEasyModeButtonBottomLeft;
+  static const dvec2 kLeftButtonTopRight;
+  static const dvec2 kLeftButtonBottomLeft;
 
-  static const dvec2 kClassicModeButtonTopRight;
-  static const dvec2 kClassicModeButtonBottomLeft;
+  static const dvec2 kRightButtonTopRight;
+  static const dvec2 kRightButtonBottomLeft;
+
+  static const dvec2 kMiddleButtonTopRight;
+  static const dvec2 kMiddleButtonBottomLeft;
+
+  static const dvec2 kSelectedTextCenter;
+  static const dvec2 kScoreViewTopCenter;
+  static const dvec2 kInstructionTextCenter;
+
+  static const dvec2 kGameOverTextCenter;
+  static const dvec2 kGameEndScoreTextCenter;
+
+  static const dvec2 kWorldLiveScoreTextCenter;
 };
 }  // namespace breakout
 

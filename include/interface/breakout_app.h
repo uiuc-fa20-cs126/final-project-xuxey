@@ -29,6 +29,9 @@ class BreakoutApp : public ci::app::App {
   // Game Fonts
   static ci::Font primary_font_;
   static ci::Font secondary_font_;
+  // Scores file name
+  const std::string kScoresFileName = "scores.txt";
+
  public:
   // Constructor
   explicit BreakoutApp();

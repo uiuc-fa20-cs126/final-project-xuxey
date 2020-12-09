@@ -10,7 +10,6 @@
 #include <filesystem>
 
 namespace fs = std::experimental::filesystem;
-using glm::dvec2;
 
 namespace breakout {
 
@@ -72,7 +71,8 @@ void BreakoutApp::SetupGameUI() {
             int score = ScoreBoard::GetLatestScore();
             return (score > 0) ? "Score: " + std::to_string(score) : "";
           },
-          dvec2(1200, 100), ci::Color("white"), secondary_font_));
+          Layout::kWorldLiveScoreTextCenter, ci::Color("white"),
+          secondary_font_));
   // Register screen on user interface
   UserInterface::DefineScreen("game_screen", game_sections);
 }
@@ -84,6 +84,7 @@ void BreakoutApp::SetupHomePageUI() {
   home_sections.push_back("classic_mode_button");
   home_sections.push_back("active_section_text");
   home_sections.push_back("high_scores");
+  home_sections.push_back("instructions");
   UserInterface::AddUISection(
       home_sections[0],
       new Button(
@@ -92,7 +93,7 @@ void BreakoutApp::SetupHomePageUI() {
   UserInterface::AddUISection(
       home_sections[1],
       new Button(
-          Layout::kEasyModeButtonBottomLeft, Layout::kEasyModeButtonTopRight,
+          Layout::kLeftButtonBottomLeft, Layout::kLeftButtonTopRight,
           []() {
             delete active_game_mode_;
             active_game_mode_ = new EasyMode();
@@ -102,8 +103,7 @@ void BreakoutApp::SetupHomePageUI() {
   UserInterface::AddUISection(
       home_sections[2],
       new Button(
-          Layout::kClassicModeButtonBottomLeft,
-          Layout::kClassicModeButtonTopRight,
+          Layout::kRightButtonBottomLeft, Layout::kRightButtonTopRight,
           []() {
             delete active_game_mode_;
             active_game_mode_ = new ClassicMode();
@@ -114,10 +114,13 @@ void BreakoutApp::SetupHomePageUI() {
       home_sections[3],
       new TextSection(
           []() { return "Selected: " + active_game_mode_->GetName(); },
-          dvec2(1200, 300), ci::Color("aqua"), secondary_font_));
+          Layout::kSelectedTextCenter, ci::Color("aqua"), secondary_font_));
   UserInterface::AddUISection(home_sections[4],
-                              new ScoreView(dvec2(2000, 100)));
-  // todo add text to Layout
+                              new ScoreView(Layout::kScoreViewTopCenter));
+  UserInterface::AddUISection(
+      home_sections[5],
+      new TextSection("Use arrow keys to move", Layout::kInstructionTextCenter,
+                      ci::Color("white"), secondary_font_));
   // Register home screen on user interface
   UserInterface::DefineScreen("home_screen", home_sections);
 }
@@ -134,20 +137,20 @@ void BreakoutApp::SetupGameEndUI() {
   game_end_sections.push_back("score_text");
   game_end_sections.push_back("home_button");
   UserInterface::AddUISection(
-      game_end_sections[0], new TextSection("Game Over", dvec2(1200, 400),
-                                            ci::Color("white"), primary_font_));
+      game_end_sections[0],
+      new TextSection("Game Over", Layout::kGameOverTextCenter,
+                      ci::Color("white"), primary_font_));
   UserInterface::AddUISection(
       game_end_sections[1],
       new TextSection(
           []() {
             return "Score: " + std::to_string(ScoreBoard::GetLatestScore());
           },
-          dvec2(1200, 500), ci::Color("aqua"), secondary_font_));
-  // todo add text to Layout
+          Layout::kGameEndScoreTextCenter, ci::Color("aqua"), secondary_font_));
   UserInterface::AddUISection(
       game_end_sections[2],
       new Button(
-          Layout::kEasyModeButtonBottomLeft, Layout::kClassicModeButtonTopRight,
+          Layout::kMiddleButtonBottomLeft, Layout::kMiddleButtonTopRight,
           [this]() {
             UserInterface::active_screen_id_ = "home_screen";
             SaveScoreboard();
@@ -156,7 +159,6 @@ void BreakoutApp::SetupGameEndUI() {
                 BreakoutApp::GetActiveGameMode()->GetName(), 0);
           },
           "Back"));
-  // todo change layout ^
   // Register screen on user interface
   UserInterface::DefineScreen("game_end_screen", game_end_sections);
 }
@@ -171,19 +173,17 @@ const ci::Font& BreakoutApp::GetSecondaryFont() {
 
 void BreakoutApp::SetupScoreboard() {
   std::ifstream file_stream;
-  std::string filename = "scores.txt";
-  file_stream.open(filename);
+  file_stream.open(kScoresFileName);
   if (!file_stream) {
     std::ofstream output_file;
-    output_file.open(filename);
+    output_file.open(kScoresFileName);
   }
   ScoreBoard::InitializeScores(file_stream);
 }
 
 void BreakoutApp::SaveScoreboard() {
   std::ofstream output_file;
-  // todo class member
-  output_file.open("scores.txt");
+  output_file.open(kScoresFileName);
   ScoreBoard::ExportScores(output_file);
   output_file.close();
 }
