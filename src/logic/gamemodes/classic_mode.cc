@@ -35,6 +35,6 @@ size_t ClassicMode::GetBrickStrength(size_t row_index,
 }
 
 std::string ClassicMode::GetName() const {
-  return "classic";
+  return "Classic";
 }
 }  // namespace breakout

@@ -4,6 +4,7 @@
 #include <logic/gamemodes/easy_mode.h>
 #include <logic/score_board.h>
 #include <sections/button.h>
+#include <sections/score_view.h>
 #include <sections/text_section.h>
 
 #include <filesystem>
@@ -82,6 +83,7 @@ void BreakoutApp::SetupHomePageUI() {
   home_sections.push_back("easy_mode_button");
   home_sections.push_back("classic_mode_button");
   home_sections.push_back("active_section_text");
+  home_sections.push_back("high_scores");
   UserInterface::AddUISection(
       home_sections[0],
       new Button(
@@ -113,6 +115,8 @@ void BreakoutApp::SetupHomePageUI() {
       new TextSection(
           []() { return "Selected: " + active_game_mode_->GetName(); },
           dvec2(1200, 300), ci::Color("aqua"), secondary_font_));
+  UserInterface::AddUISection(home_sections[4],
+                              new ScoreView(dvec2(2000, 100)));
   // todo add text to Layout
   // Register home screen on user interface
   UserInterface::DefineScreen("home_screen", home_sections);
@@ -146,10 +150,10 @@ void BreakoutApp::SetupGameEndUI() {
           Layout::kEasyModeButtonBottomLeft, Layout::kClassicModeButtonTopRight,
           [this]() {
             UserInterface::active_screen_id_ = "home_screen";
+            SaveScoreboard();
             // Reset scoreboard
             ScoreBoard::RegisterScore(
                 BreakoutApp::GetActiveGameMode()->GetName(), 0);
-            SaveScoreboard();
           },
           "Back"));
   // todo change layout ^

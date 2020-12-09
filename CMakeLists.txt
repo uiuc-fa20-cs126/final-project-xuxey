@@ -71,7 +71,8 @@ list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES}
         src/interface/layout.cc
         src/logic/gamemodes/easy_mode.cc
         src/logic/gamemodes/classic_mode.cc
-        src/logic/score_board.cc)
+        src/logic/score_board.cc
+        src/sections/score_view.cc)
 
 # Test files go here
 list(APPEND TEST_FILES

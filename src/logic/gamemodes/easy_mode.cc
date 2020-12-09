@@ -20,6 +20,6 @@ size_t EasyMode::GetBrickStrength(size_t row_index, const Brick& brick) const {
 }
 
 std::string EasyMode::GetName() const {
-  return "easy";
+  return "Easy";
 }
 }  // namespace breakout
