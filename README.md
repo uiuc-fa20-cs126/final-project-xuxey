@@ -12,7 +12,7 @@ Press Space to pause/resume the game.
 
 ## B-Roll Shots
 
-![Home Screen](https://cdn.discordapp.com/attachments/595275995221852184/786331760446406656/unknown.png)
+![Home Screen](https://cdn.discordapp.com/attachments/595275995221852184/786335661736460328/unknown.png)
 ![Game Screen](https://cdn.discordapp.com/attachments/595275995221852184/786331806013587476/unknown.png)
 ![Game Over](https://cdn.discordapp.com/attachments/595275995221852184/786331845876514868/unknown.png)
 
