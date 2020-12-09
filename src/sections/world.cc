@@ -154,6 +154,9 @@ void World::HandleBrickCollisions() {
         ScoreBoard::RegisterScore(BreakoutApp::GetActiveGameMode()->GetName(),
                                   score_);
         bricks_.erase(brick_iterator);
+        if (bricks_.empty()) {
+          HandleGameEnd();
+        }
         break;
       }
       brick.color_ =
@@ -178,6 +181,9 @@ void World::HandlePlateCollision() {
 }
 
 void World::HandleGameEnd() {
+  if (bricks_.empty()) {
+    score_ += kGameWinScoreBonus;
+  }
   ScoreBoard::RegisterScore(BreakoutApp::GetActiveGameMode()->GetName(),
                             score_);
   Setup();

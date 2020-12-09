@@ -26,6 +26,8 @@ class World : public UISection {
   const size_t kNumBrickRows = 5;
   // Speed of the ball in pixels/frame
   const double kBallSpeed = 5.0;
+  // Score bonus after destroying all bricks
+  const int kGameWinScoreBonus = 400;
   bool is_playing_ = true;
   static ci::audio::VoiceRef bounce_sound;
   // Helper methods
